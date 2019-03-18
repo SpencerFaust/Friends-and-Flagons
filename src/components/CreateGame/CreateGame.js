@@ -11,6 +11,7 @@ class CreateGame extends Component {
     time: '',
     gameImage: '',
     discord: '',
+    creator: this.props.user.id,
   };
 
   handleInputChangeFor = (property) => (event) => {
@@ -21,10 +22,13 @@ class CreateGame extends Component {
     });
   };
 
+  handleSubmit = () => {
+    this.props.dispatch({ type: 'CREATE_GAME', payload: this.state })
+  };
+
   render() {
     return (
       <div>
-        <form onSubmit={this.registerUser}>
           <h1>Create a game</h1>
           <div>
             <label htmlFor="gameName">
@@ -83,7 +87,7 @@ class CreateGame extends Component {
           </div>
           <div>
             <label htmlFor="gameImage">
-              Game Name:
+              Game Image:
               <input
                 type="text"
                 name="gameImage"
@@ -94,7 +98,7 @@ class CreateGame extends Component {
           </div>
           <div>
             <label htmlFor="discord">
-              Game Name:
+              Discord Link:
               <input
                 type="text"
                 name="discord"
@@ -103,10 +107,8 @@ class CreateGame extends Component {
               />
             </label>
           </div>
-          <div>
-              <input type="submit"/>
-          </div>
-        </form>
+          <button onClick={this.handleSubmit} >Create Game</button>
+        
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import GameItem from '../GameItem/GameItem';
 
 
 // this could also be written with destructuring parameters as:
@@ -16,6 +17,11 @@ class Games extends Component {
     return(
         <div>
           This is the Games Page where the list of games will go. <br/>
+
+          {this.props.game.map(game => 
+            <GameItem game={game} key={game.id} />
+          )}
+
           {JSON.stringify(this.props.game)}
         </div>
       );
