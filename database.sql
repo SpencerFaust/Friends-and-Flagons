@@ -1,4 +1,6 @@
 --Create the tables needed for base mode.
+--Examples are included below as well as sanitization; change which are 
+--commented for implimentation.
 
 --This table holds user information.
 CREATE TABLE "user" (

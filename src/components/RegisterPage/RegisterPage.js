@@ -5,17 +5,25 @@ class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
+    email: '',
+    age: '',
+    bio: '',
+    image: '',
   };
 
   registerUser = (event) => {
     event.preventDefault();
 
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.password && this.state.email && this.state.age && this.state.bio && this.state.image ) {
       this.props.dispatch({
         type: 'REGISTER',
         payload: {
           username: this.state.username,
           password: this.state.password,
+          email: this.state.email,
+          age: this.state.age,
+          bio: this.state.bio,
+          image: this.state.image,
         },
       });
     } else {
@@ -61,6 +69,50 @@ class RegisterPage extends Component {
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="email">
+              Email:
+              <input
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleInputChangeFor('email')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="age">
+              Age Range:
+              <input
+                type="text"
+                name="age"
+                value={this.state.age}
+                onChange={this.handleInputChangeFor('age')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="bio">
+              Bio:
+              <input
+                type="text"
+                name="bio"
+                value={this.state.bio}
+                onChange={this.handleInputChangeFor('bio')}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="image">
+              Image URL:
+              <input
+                type="text"
+                name="image"
+                value={this.state.image}
+                onChange={this.handleInputChangeFor('image')}
               />
             </label>
           </div>
