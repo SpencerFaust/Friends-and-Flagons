@@ -1,10 +1,8 @@
 import React from 'react';
 
-const GameItem = () => (
-  <div>
-    <p>
-      This will display a single game's information.
-    </p>
+const GameItem = (props) => (
+  <div >
+    {props.game.game_name}
   </div>
 );
 

@@ -22,8 +22,6 @@ class MyGames extends Component {
           {this.props.game.map(game => 
             <GameItem game={game} key={game.id} />
           )}
-
-          {JSON.stringify(this.props.game)}
         </div>
       );
     }
