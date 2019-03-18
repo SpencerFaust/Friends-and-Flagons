@@ -1,19 +1,36 @@
 const express = require('express');
-const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-// Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
-  // Send back user object from the session (previously queried from the database)
-  res.send(req.user);
+router.get('/', (req, res) => {
+    console.log('DB game GET request hit.')
+    pool.query(`SELECT * 
+    FROM "game";`).then((response) => {
+        console.log('Game GET server response:', response.rows)
+        res.send(response.rows)
+    }).catch((error) => {
+        console.log('Game GET error:', error)
+    });
+});
+
+router.get('/mine', (req, res) => {
+    pool.query(`SELECT "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
+    FROM "game_roster"
+    JOIN "user" ON "user"."id" = "game_roster"."player_id"
+    JOIN "game" ON "game_roster"."game_id" = "game"."id"
+    WHERE "game_roster"."player_id" = $1`, [req.user.id]).then((response) => {
+        console.log('Game GET server response:', response.rows)
+        res.send(response.rows)
+    }).catch((error) => {
+        console.log('Game GET error:', error)
+    });
 });
 
 //Handles registration for new users; password is encrypted beforehand.
-router.post('/register', (req, res, next) => {  
+router.post('/game', (req, res, next) => {  
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
   const email = req.body.email;
