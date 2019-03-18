@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import GameItem from '../GameItem/GameItem';
 
 
 // this could also be written with destructuring parameters as:
@@ -8,14 +9,18 @@ import { connect } from 'react-redux';
 class MyGames extends Component {
 
   componentDidMount() {
-    console.log('Component Mounted.')
     this.props.dispatch({ type: 'FETCH_MY_GAME'})
   }
 
   render() {
     return(
         <div>
-          This is the Games Page where the list of games will go. <br/>
+          This is the Games Page where the list of  my games will go. <br/>
+
+          {/* {this.props.game.map(game => 
+            <GameItem game={game} key={game.id} />
+          )} */}
+
           {JSON.stringify(this.props.game)}
         </div>
       );
