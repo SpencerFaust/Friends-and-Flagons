@@ -12,12 +12,11 @@ class Games extends Component {
     console.log('Component Mounted.')
     this.props.dispatch({ type: 'FETCH_GAME'})
   }
-
+  
   render() {
+
     return(
         <div>
-          This is the Games Page where the list of games will go. <br/>
-
           {this.props.game.map(game => 
             <GameItem game={game} key={game.id} />
           )}
