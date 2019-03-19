@@ -131,7 +131,7 @@ class CreateGame extends Component {
         label="Game Description"
         multiline
         fullWidth
-        rowsMax="4"
+        rowsMax="10"
         value={this.state.gameDescription}
         onChange={this.handleChange('gameDescription')}
         className={classes.textField}

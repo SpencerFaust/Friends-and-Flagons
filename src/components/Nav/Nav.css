@@ -9,6 +9,8 @@
 .nav {
   overflow: hidden;
   background-color: #00acb0;
+  width: 100px;
+  float: left;
 }
 
 .nav-link {
@@ -19,6 +21,7 @@
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
+  width: 100px;
 
   /* these last two make the logout button in
   the nav bar look like another link */
@@ -33,4 +36,5 @@
 
 .nav-right {
   float: right;
+  text-align: center;
 }
