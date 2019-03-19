@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+});
+
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -9,6 +28,19 @@ class RegisterPage extends Component {
     age: '',
     bio: '',
     image: '',
+    open: false,
+  };
+
+  handleOpen = () => {
+    this.setState({ 
+      ...this.state,
+      open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ 
+      ...this.state,
+      open: false });
   };
 
   registerUser = (event) => {
@@ -38,6 +70,7 @@ class RegisterPage extends Component {
   }
 
   render() {
+
     return (
       <div>
         {this.props.errors.registrationMessage && (
@@ -48,6 +81,7 @@ class RegisterPage extends Component {
             {this.props.errors.registrationMessage}
           </h2>
         )}
+        
         <form onSubmit={this.registerUser}>
           <h1>Register User</h1>
           <div>
@@ -117,12 +151,34 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <input
+
+
+          
+
+          <Button onClick={this.handleOpen} type="submit" name="submit" value="Register">Register</Button>
+          {/* <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <div style={getModalStyle()} className={classes.paper}>
+            <Typography variant="h6" id="modal-title">
+              Text in a modal
+            </Typography>
+            <Typography variant="subtitle1" id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </div>
+        </Modal> */}
+
+
+            {/* <input
               className="register"
               type="submit"
               name="submit"
               value="Register"
-            />
+            /> */}
           </div>
         </form>
         <center>
@@ -138,6 +194,10 @@ class RegisterPage extends Component {
     );
   }
 }
+
+RegisterPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 // Instead of taking everything from state, we just want the error messages.
 // if you wanted you could write this code like this:
