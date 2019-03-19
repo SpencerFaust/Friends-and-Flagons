@@ -75,7 +75,7 @@ class LoginPage extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}  height="50%">
+        <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={classes.paper}><h1>FRIENDS AND FLAGONS</h1></Paper>
           </Grid>

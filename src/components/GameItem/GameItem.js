@@ -8,18 +8,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   card: {
     maxWidth: 400,
+    padding: 10,
   },
   media: {
     height: 0,
@@ -41,6 +41,9 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  floatRight: {
+    float: 'right',
+  }
 });
 
 class GameItem extends React.Component {
@@ -51,15 +54,24 @@ class GameItem extends React.Component {
   };
 
   dateTime = () => {
-    const date = this.props.game.date;
-    const time = this.props.game.time;
-    return format;
+    let date = this.props.game.date;
+    if(date.length > 10) date = date.substring(0,10);
+    let time = this.props.game.time;
+    if(time.length > 5) time = time.substring(0,5);
+    return date + ' at ' + time;
   }
+
+  briefDescription = () => {
+    let description = this.props.game.game_description;
+    if(description.length > 100) description = description.substring(0,100) + '...';
+    return description;
+  };
 
   render() {
     const { classes } = this.props;
 
     return (
+      <Grid item xs={12} sm={6} md={3} lg={2} xl={1}>
       <Card className={classes.card}>
         <CardHeader
           action={
@@ -72,22 +84,24 @@ class GameItem extends React.Component {
         />
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
+          image="http://dndspeak.com/wp-content/uploads/2018/03/cave_by_nele_diel-d655qw5.jpg"
+          title="Dungeon Image"
         />
         <CardContent>
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            {this.briefDescription()}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
+            <AddCircleOutline />
+            
           </IconButton>
-          <IconButton aria-label="Share">
+        <Typography component="p">Sign up</Typography>
+          {/* <IconButton aria-label="Share">
             <ShareIcon />
-          </IconButton>
+          </IconButton> */}
+          <Typography component="p" style={styles.floatRight}>Description</Typography>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -97,36 +111,19 @@ class GameItem extends React.Component {
             aria-label="Show more"
           >
             <ExpandMoreIcon />
+            
           </IconButton>
+          
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Method:</Typography>
             <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-              chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-              salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-              minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-              to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
+              {this.props.game.game_description}
             </Typography>
           </CardContent>
         </Collapse>
       </Card>
+      </Grid>
     );
   }
 }

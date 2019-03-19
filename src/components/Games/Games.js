@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GameItem from '../GameItem/GameItem';
+import Grid from '@material-ui/core/Grid';
 
 
 // this could also be written with destructuring parameters as:
@@ -12,15 +13,15 @@ class Games extends Component {
     console.log('Component Mounted.')
     this.props.dispatch({ type: 'FETCH_GAME'})
   }
-  
+
   render() {
 
     return(
-        <div>
+      <Grid container spacing={24}>
           {this.props.game.map(game => 
             <GameItem game={game} key={game.id} />
           )}
-        </div>
+        </Grid>
       );
     }
   }
