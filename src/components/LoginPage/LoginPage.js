@@ -80,15 +80,12 @@ class LoginPage extends Component {
             <h1>FRIENDS AND FLAGONS</h1>
           </Grid>
           
-          <Grid item xs={12} sm={12}>
+          
+          <Grid item xs={2}>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={2}>
           </Grid>
-          <Grid item xs={12} sm={12}>
-          </Grid>
-          <Grid item xs={12}>
-          </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <TextField
                 id="filled-name"
                 label="User Name"
@@ -100,7 +97,7 @@ class LoginPage extends Component {
                 helperText="What is your username?"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
             <TextField
                 id="filled-password"
                 type="password"
@@ -113,8 +110,10 @@ class LoginPage extends Component {
                 helperText="What is your password?"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
             </Grid>
+            <Grid item xs={2}>
+          </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
               <Button
