@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -15,7 +14,6 @@ import red from '@material-ui/core/colors/red';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Cancel from '@material-ui/icons/Cancel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -86,6 +84,18 @@ class GameItem extends React.Component {
     this.handleClose();
   }
 
+  leaveGameDispatch = (userId, gameId) => () => {
+    console.log('Leave:', userId, gameId);
+    this.props.leaveGame(userId, gameId);
+    this.handleClose();
+  }
+
+  deleteGameDispatch = (userId, gameId) => () => {
+    console.log('Delete:', userId, gameId);
+    this.props.delete(userId, gameId);
+    this.handleClose();
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -94,9 +104,12 @@ class GameItem extends React.Component {
       <Card className={classes.card}>
         <CardHeader
           action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
+            <IconButton 
+            aria-label="Delete this game"
+            onClick={this.handleClickOpen}>
+            <Cancel />
+            
+          </IconButton>
           }
           title={this.props.game.game_name}
           subheader= {this.dateTime()}
@@ -110,10 +123,11 @@ class GameItem extends React.Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           
-          {!this.props.mygames ? 
+          {this.props.created ? '' :
+          !this.props.mygames ? 
           <>
           <IconButton 
-            aria-label="Add to favorites"
+            aria-label="Sign up for this game"
             onClick={this.handleClickOpen}>
             <AddCircleOutline />
             
@@ -143,6 +157,11 @@ class GameItem extends React.Component {
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
+
+          {/* This will conditionally render the Discord link if the user is viewing within MyGames page. */}
+          {!this.props.mygames ? '' : <Typography paragraph> {this.props.game.discord} </Typography>}
+
+
             <Typography paragraph>
               {this.props.game.game_description}
             </Typography>
@@ -150,6 +169,56 @@ class GameItem extends React.Component {
         </Collapse>
 
       </Card>
+
+      {/* This conditional controls the delete game option for game creators or the join/leave 
+      game icon, text and dialogue box based on if the user has already joined the game or not. */}
+      {this.props.created ?
+
+        <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        >
+        <DialogTitle id="alert-dialog-title">{"Delete this game?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you'd like to delete this game?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            Don't Delete
+          </Button>
+          <Button onClick={this.deleteGameDispatch(this.props.user, this.props.game.id)} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+        </Dialog>
+        :
+      this.props.mygames ? 
+        <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Leave this game?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you'd like to leave this game?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button onClick={this.leaveGameDispatch(this.props.user, this.props.game.id)} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+      :
       <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -171,6 +240,8 @@ class GameItem extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+      }
+
       </Grid>
     );
   }

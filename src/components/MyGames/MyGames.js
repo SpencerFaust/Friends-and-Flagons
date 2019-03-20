@@ -13,14 +13,18 @@ class MyGames extends Component {
     this.props.dispatch({ type: 'FETCH_MY_GAME'})
   }
 
+  leaveGame =(userId, gameId) => {
+    this.props.dispatch({ type: 'LEAVE_GAME', payload: {id: userId, game: gameId } })
+  }
+
   render() {
 
-    console.log(this.props)
+    console.log('My games log', this.props.game)
     return(
       <Grid container spacing={24}>
 
           {this.props.game.map(game => 
-            <GameItem game={game} key={game.id} mygames={true} />
+            <GameItem game={game} key={game.id} mygames={true} leaveGame={this.leaveGame} user={this.props.user.id} />
           )}
         </Grid>
       );

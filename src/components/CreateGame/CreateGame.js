@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import GameItem from '../GameItem/GameItem';
+import Grid from '@material-ui/core/Grid/Grid';
 
 const styles = theme => ({
   container: {
@@ -37,6 +39,10 @@ class CreateGame extends Component {
       creator: this.props.user.id,
   };
 
+  componentDidMount() {
+    this.props.dispatch({ type: 'CREATED_GAME'})
+  }
+
   handleChange = (property) => (event) => {
     event.preventDefault();
     this.setState({
@@ -54,11 +60,17 @@ class CreateGame extends Component {
     };
 };
 
+deleteGame =(userId, gameId) => {
+  this.props.dispatch({ type: 'DELETE_GAME', payload: {id: userId, game: gameId } })
+}
+
   render() {
   const { classes } = this.props;
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
+    <div>
+
+<form className={classes.container} noValidate autoComplete="off">
     
       <TextField
         id="filled-name"
@@ -141,6 +153,15 @@ class CreateGame extends Component {
       />
       <Button onClick={this.handleSubmit}>Submit</Button>
     </form>
+    <div>
+        <h1>Games you've created</h1>
+    </div>
+    <Grid container spacing={24}>
+      {this.props.game.map(game => 
+        <GameItem game={game} key={game.id} user={this.props.user.id} created={true} delete={this.deleteGame} />
+      )}
+    </Grid>
+    </div>
     )
   }
 }

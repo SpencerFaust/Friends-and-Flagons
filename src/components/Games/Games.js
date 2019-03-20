@@ -11,7 +11,7 @@ class Games extends Component {
 
   componentDidMount() {
     console.log('Component Mounted.')
-    this.props.dispatch({ type: 'FETCH_GAME'})
+    this.props.dispatch({ type: 'FETCH_GAME', payload: this.props.user.id})
   }
 
   addGame = (userId, gameId) => {

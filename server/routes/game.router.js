@@ -6,8 +6,10 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     console.log('DB game GET request hit.')
-    pool.query(`SELECT * 
-    FROM "game";`).then((response) => {
+    pool.query(`SELECT * FROM "game"
+    WHERE "game"."id" NOT IN (SELECT game_id FROM "game_roster"
+    JOIN "game" ON "game"."id" = "game_roster"."game_id"
+    AND "game_roster"."player_id" = $1);`, [req.user.id]).then((response) => {
         console.log('Game GET server response:', response.rows)
         res.send(response.rows)
     }).catch((error) => {
@@ -16,11 +18,23 @@ router.get('/', (req, res) => {
 });
 
 router.get('/mine', (req, res) => {
-    pool.query(`SELECT "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
+    pool.query(`SELECT "game"."id", "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
     FROM "game_roster"
     JOIN "user" ON "user"."id" = "game_roster"."player_id"
     JOIN "game" ON "game_roster"."game_id" = "game"."id"
     WHERE "game_roster"."player_id" = $1;`, [req.user.id]).then((response) => {
+        console.log('Game GET server response:', response.rows)
+        res.send(response.rows)
+    }).catch((error) => {
+        console.log('Game GET error:', error)
+        res.sendStatus(500);
+    });
+});
+
+router.get('/created', (req, res) => {
+    pool.query(`SELECT "id", "creator_id", "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
+    FROM "game"
+    WHERE "creator_id" = $1;`, [req.user.id]).then((response) => {
         console.log('Game GET server response:', response.rows)
         res.send(response.rows)
     }).catch((error) => {
@@ -52,8 +66,24 @@ router.post('/join', (req, res) => {
     console.log(req.body);
     pool.query(`INSERT INTO "game_roster" ("game_id", "player_id")
     VALUES ( $1, $2);`, [req.body.game, req.body.id]).then(() => {
-    res.sendStatus(201) .catch(() => res.sendStatus(500));
-    })
+    res.sendStatus(201) 
+    }).catch(() => res.sendStatus(500));
+})
+
+router.delete('/leave', (req, res) => {
+    console.log(req.body);
+    pool.query(`DELETE FROM "game_roster"
+    WHERE "game_id" = $1 AND "player_id" = $2;`, [req.body.game, req.body.id]).then(() => {
+    res.sendStatus(201) 
+    }).catch(() => res.sendStatus(500));
+})
+
+router.delete('/delete', (req, res) => {
+    console.log(req.body);
+    pool.query(`DELETE FROM "game"
+    WHERE "id" = $1 AND "creator_id" = $2;`, [req.body.game, req.user.id]).then(() => {
+    res.sendStatus(201) 
+    }).catch(() => res.sendStatus(500));
 })
 
 // Handles login form authenticate/login POST
