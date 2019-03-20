@@ -77,12 +77,16 @@ class LoginPage extends Component {
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}><h1>FRIENDS AND FLAGONS</h1></Paper>
+            <h1>FRIENDS AND FLAGONS</h1>
+          </Grid>
+          
+          <Grid item xs={12} sm={12}>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+          </Grid>
+          <Grid item xs={12} sm={12}>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>This will be the image</Paper>
-          </Grid>
-          <Grid item xs={3}>
           </Grid>
             <Grid item xs={3}>
               <TextField
