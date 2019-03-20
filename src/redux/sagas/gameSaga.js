@@ -30,10 +30,21 @@ function* fetchMyGame() {
     }
   }
 
+  function* joinGame(action) {
+    try {
+      const response = yield axios.post('api/game/join', action.payload);
+      yield put({ type: 'SET_GAMES', payload: response.data });
+      console.log('GameSaga data:', response.data)
+    } catch (error) {
+      console.log('User get request failed', error);
+    }
+  }
+
 function* userSaga() {
   yield takeLatest('FETCH_GAME', fetchGame);
   yield takeLatest('FETCH_MY_GAME', fetchMyGame);
   yield takeLatest('CREATE_GAME', createGame);
+  yield takeLatest('JOIN_GAME', joinGame);
 }
 
 export default userSaga;

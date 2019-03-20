@@ -14,12 +14,17 @@ class Games extends Component {
     this.props.dispatch({ type: 'FETCH_GAME'})
   }
 
+  addGame = (userId, gameId) => {
+    console.log('Dispatch hit with ID and Game ID:', userId, gameId)
+    this.props.dispatch({ type: 'JOIN_GAME', payload: {id: userId, game: gameId } })
+  }
+
   render() {
 
     return(
       <Grid container spacing={24}>
           {this.props.game.map(game => 
-            <GameItem game={game} key={game.id} />
+            <GameItem game={game} key={game.id} user={this.props.user.id} joinGame={this.addGame} />
           )}
         </Grid>
       );

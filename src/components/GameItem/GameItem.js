@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -12,9 +13,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import Cancel from '@material-ui/icons/Cancel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   card: {
@@ -47,10 +55,21 @@ const styles = theme => ({
 });
 
 class GameItem extends React.Component {
-  state = { expanded: false };
+  state = { 
+    expanded: false,
+    open: false,
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   dateTime = () => {
@@ -61,17 +80,17 @@ class GameItem extends React.Component {
     return date + ' at ' + time;
   }
 
-  briefDescription = () => {
-    let description = this.props.game.game_description;
-    if(description.length > 100) description = description.substring(0,100) + '...';
-    return description;
-  };
+  logoutDispatch =  (userId, gameId) => () => {
+    console.log('logoutDis hit', userId, gameId);
+    this.props.joinGame(userId, gameId);
+    this.handleClose();
+  }
 
   render() {
     const { classes } = this.props;
 
     return (
-      <Grid item xs={12} sm={6} md={3} lg={2} xl={1}>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={this.props.key}>
       <Card className={classes.card}>
         <CardHeader
           action={
@@ -88,20 +107,28 @@ class GameItem extends React.Component {
           title="Dungeon Image"
         />
         <CardContent>
-          <Typography component="p">
-            {this.briefDescription()}
-          </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
+          
+          {!this.props.mygames ? 
+          <>
+          <IconButton 
+            aria-label="Add to favorites"
+            onClick={this.handleClickOpen}>
             <AddCircleOutline />
             
           </IconButton>
-        <Typography component="p">Sign up</Typography>
-          {/* <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton> */}
-          <Typography component="p" style={styles.floatRight}>Description</Typography>
+        <Typography component="p">Sign up</Typography> 
+        </> : <>
+          <IconButton 
+            aria-label="Leave this game"
+            onClick={this.handleClickOpen}>
+            <Cancel />
+            
+          </IconButton>
+        <Typography component="p">Leave Game</Typography> 
+        </>}
+
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -110,10 +137,9 @@ class GameItem extends React.Component {
             aria-expanded={this.state.expanded}
             aria-label="Show more"
           >
-            <ExpandMoreIcon />
-            
+        <ExpandMoreIcon />
           </IconButton>
-          
+          <Typography component="p" style={styles.floatRight}>Description</Typography>
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
@@ -122,7 +148,29 @@ class GameItem extends React.Component {
             </Typography>
           </CardContent>
         </Collapse>
+
       </Card>
+      <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Please be certian you are available on {this.dateTime()} before agreeing to participate in this game.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={this.logoutDispatch(this.props.user, this.props.game.id)} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Grid>
     );
   }

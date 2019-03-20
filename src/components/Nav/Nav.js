@@ -55,12 +55,12 @@ class Nav extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color="black">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Friends and Flagons

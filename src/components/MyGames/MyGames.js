@@ -20,7 +20,7 @@ class MyGames extends Component {
       <Grid container spacing={24}>
 
           {this.props.game.map(game => 
-            <GameItem game={game} key={game.id} />
+            <GameItem game={game} key={game.id} mygames={true} />
           )}
         </Grid>
       );

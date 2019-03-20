@@ -48,6 +48,14 @@ router.post('/create', (req, res, next) => {
     .catch(() => res.sendStatus(500));
 });
 
+router.post('/join', (req, res) => {
+    console.log(req.body);
+    pool.query(`INSERT INTO "game_roster" ("game_id", "player_id")
+    VALUES ( $1, $2);`, [req.body.game, req.body.id]).then(() => {
+    res.sendStatus(201) .catch(() => res.sendStatus(500));
+    })
+})
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful
