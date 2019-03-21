@@ -32,7 +32,7 @@ function* fetchMyGame() {
   function* createGame(action) {
     try {
       const response = yield axios.post('api/game/create', action.payload);
-      yield put({ type: 'SET_GAMES', payload: response.data });
+      yield put({ type: 'CREATED_GAME' });
       console.log('GameSaga data:', response.data)
     } catch (error) {
       console.log('User get request failed', error);

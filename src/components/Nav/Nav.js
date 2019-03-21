@@ -60,7 +60,11 @@ class Nav extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="black" style = {{backgroundColor: 'grey'}}>
+        <AppBar position="static" style = {{
+            backgroundColor: 'grey', 
+            color: 'black', 
+            margin: '0px',
+            marginBottom: '10px'}}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Friends and Flagons

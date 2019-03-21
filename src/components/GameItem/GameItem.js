@@ -26,6 +26,7 @@ const styles = theme => ({
   card: {
     maxWidth: 400,
     padding: 10,
+    backgroundColor: 'grey',
   },
   media: {
     height: 0,
@@ -123,17 +124,7 @@ class GameItem extends React.Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           
-
-
-
-
-
-
-         
-
-          
-
-          {this.props.game.creator_id === this.props.user ? 'You created this game.' :
+          {this.props.game.creator_id === this.props.user ? 'This is your game.' :
           this.props.mygames ?
           <>
           <IconButton 
@@ -154,16 +145,8 @@ class GameItem extends React.Component {
            
          </IconButton>
        <Typography component="p">Sign up</Typography> 
-       </>
-          
+       </>          
         }
-
-
-
-
-
-
-
 
           <IconButton
             className={classnames(classes.expand, {
@@ -274,12 +257,3 @@ GameItem.propTypes = {
 };
 
 export default withStyles(styles)(GameItem);
-
-
-// const GameItem = (props) => (
-//   <div >
-//     {props.game.game_name}
-//   </div>
-// );
-
-// export default GameItem;

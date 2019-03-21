@@ -1,29 +1,66 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
+import { withRouter } from 'react-router';
 import {connect} from 'react-redux';
-
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
-// const styles = theme => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   paper: {
-//     padding: theme.spacing.unit * 2,
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary,
-//   },
-// });
+const styles = theme => ({
+  root: {
+    width: '90%',
+  },
+  button: {
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  actionsContainer: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+  resetContainer: {
+    padding: theme.spacing.unit * 3,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
     email: '',
-    age: '',
+    age: 1,
     bio: '',
     image: '',
     open: false,
+    activeStep: 0,
+  };
+
+  handleNext = () => {
+    console.log(this.state)
+    this.setState(state => ({
+      activeStep: state.activeStep + 1,
+    }));
+  };
+
+  handleBack = () => {
+    this.setState(state => ({
+      activeStep: state.activeStep - 1,
+    }));
+  };
+
+  handleReset = () => {
+    this.setState({
+      activeStep: 0,
+    });
   };
 
   handleOpen = () => {
@@ -38,10 +75,15 @@ class RegisterPage extends Component {
       open: false });
   };
 
+  loginReroute = () => {
+    this.props.dispatch({type: 'SET_TO_LOGIN_MODE'});
+    this.props.history.push('/about');
+  }
+
   registerUser = (event) => {
     event.preventDefault();
 
-    if (this.state.username && this.state.password && this.state.email && this.state.age && this.state.bio && this.state.image ) {
+    if (this.state.username && this.state.password && this.state.email && this.state.age && this.state.bio) {
       this.props.dispatch({
         type: 'REGISTER',
         payload: {
@@ -53,140 +95,128 @@ class RegisterPage extends Component {
           image: this.state.image,
         },
       });
+      this.loginReroute();
     } else {
+      alert('There was an error creating your account.')
       this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
     }
   } // end registerUser
 
-  handleInputChangeFor = propertyName => (event) => {
+  handleChange = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
   }
 
-  render() {
+  getSteps() {
+    return ['Set your Username', 'Set your Password', 'What is your email address?', 'Write a brief biography.'];
+  }
 
-    const { classes } = this.props;
-    
-    return (
-      <div>
-        {this.props.errors.registrationMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.registrationMessage}
-          </h2>
-        )}
-        
-        <form onSubmit={this.registerUser}>
-          <h1>Register User</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
+  getStepContent = (step) =>  {
+    switch (step) {
+      case 0:
+        return <TextField
+                id="filled-name"
+                label="User Name"
+                className={this.props.classes.textField}
+                onChange= {this.handleChange('username')}
+                margin="normal"
+                variant="filled"
+                style = {{width: "80%"}}
+                helperText="What do you want your username to be?"
+              />;
+      case 1:
+        return <TextField
+                id="filled-name"
+                label="Password"
                 type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="email">
-              Email:
-              <input
-                type="text"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleInputChangeFor('email')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="age">
-              Age Range:
-              <input
-                type="text"
-                name="age"
-                value={this.state.age}
-                onChange={this.handleInputChangeFor('age')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="bio">
-              Bio:
-              <input
-                type="text"
-                name="bio"
-                value={this.state.bio}
-                onChange={this.handleInputChangeFor('bio')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="image">
-              Image URL:
-              <input
-                type="text"
-                name="image"
-                value={this.state.image}
-                onChange={this.handleInputChangeFor('image')}
-              />
-            </label>
-          </div>
-          <div>
+                className={this.props.classes.textField}
+                onChange= {this.handleChange('password')}
+                margin="normal"
+                variant="filled"
+                style = {{width: "80%"}}
+                helperText="What do you want your password to be?"
+              />;
+      case 2:
+        return<TextField
+                id="filled-name"
+                label="Email Address"
+                className={this.props.classes.textField}
+                onChange= {this.handleChange('email')}
+                margin="normal"
+                variant="filled"
+                style = {{width: "80%"}}
+                helperText="What email can we use to send you game reminders?"
+              />;
+      // case 3:
+      //   return 'Age range goes here.'
+      case 3:
+        return<TextField
+                id="filled-multiline-flexible"
+                label="Player Biography"
+                className={this.props.classes.textField}
+                onChange= {this.handleChange('bio')}
+                margin="normal"
+                variant="filled"
+                style = {{width: "80%"}}
+                helperText="Include what games you like to play and your prefered play styles!"
+              />;
+      default:
+        return 'Unknown step';
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+    const steps = this.getSteps();
+    const { activeStep } = this.state;
 
 
-          
-
-          <Button onClick={this.handleOpen} type="submit" name="submit" value="Register">Register</Button>
-          {/* <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
-          <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
-              Text in a modal
-            </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </div>
-        </Modal> */}
 
 
-            {/* <input
-              className="register"
-              type="submit"
-              name="submit"
-              value="Register"
-            /> */}
-          </div>
-        </form>
-        <center>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}
-          >
-            Login
-          </button>
-        </center>
+    return (
+      <div className={classes.root}>
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((label, index) => (
+            <Step key={label} change={this.handleChange}  >
+              <StepLabel>{label}</StepLabel>
+              <StepContent>
+                <Typography>{this.getStepContent(index, this.handleChange)}</Typography>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={this.handleBack}
+                      className={classes.button}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                  </div>
+                </div>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <Typography>All you need to do now is finalize registration!</Typography>
+            <Button 
+              variant="contained"
+              color="primary"
+              onClick={this.registerUser} 
+              className={classes.button}>
+              Register your Account
+            </Button>
+          </Paper>
+        )}
       </div>
     );
   }
@@ -196,12 +226,12 @@ RegisterPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
+// // Instead of taking everything from state, we just want the error messages.
+// // if you wanted you could write this code like this:
+// // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(RegisterPage)));
 
