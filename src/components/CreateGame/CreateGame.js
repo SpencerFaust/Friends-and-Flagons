@@ -8,8 +8,19 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import GameItem from '../GameItem/GameItem';
 import Grid from '@material-ui/core/Grid/Grid';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.primary,
+    backgroundColor: 'grey',
+    padding: 5,
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -69,9 +80,14 @@ deleteGame =(userId, gameId) => {
 
   return (
     <div>
+      <Grid container spacing={24}>
+        <Grid item xs={12}>
+      <Paper className={classes.paper}>
 
-<form className={classes.container} noValidate autoComplete="off">
-    
+      
+      <form className={classes.container} noValidate autoComplete="off">
+
+      <Grid item xs={6}>
       <TextField
         id="filled-name"
         label="Game Name"
@@ -80,9 +96,12 @@ deleteGame =(userId, gameId) => {
         onChange={this.handleChange('gameName')}
         margin="normal"
         variant="filled"
+        style = {{width: "80%"}}
         helperText="What is your adventure called?"
       />
+      </Grid>
 
+      <Grid item xs={6}>
       <TextField
         id="filled-name"
         label="Discord Link"
@@ -91,9 +110,12 @@ deleteGame =(userId, gameId) => {
         onChange={this.handleChange('discord')}
         margin="normal"
         variant="filled"
+        style = {{width: "80%"}}
         helperText="Make sure the link doesn't expire!"
       />
-      
+      </Grid>
+
+      <Grid item xs={4}>
       <TextField
         id="filled-number"
         label="Maximum Players"
@@ -105,7 +127,9 @@ deleteGame =(userId, gameId) => {
         variant="filled"
         helperText="How many players do you want?"
       />
+      </Grid>
 
+      <Grid item xs={4}>
       <TextField
         id="filled-date"
         label="Date"
@@ -120,7 +144,9 @@ deleteGame =(userId, gameId) => {
         variant="filled"
         helperText="What date is your game?"
       />
+      </Grid>
 
+      <Grid item xs={4}>
       <TextField
         id="filled-time"
         label="Time"
@@ -135,9 +161,9 @@ deleteGame =(userId, gameId) => {
         variant="filled"
         helperText="What time is your game?"
       />
+      </Grid>
 
-        <br/>
-
+      <Grid item xs={12}>
       <TextField
         id="filled-multiline-flexible"
         label="Game Description"
@@ -151,8 +177,19 @@ deleteGame =(userId, gameId) => {
         helperText="What can players expect?"
         variant="filled"
       />
-      <Button onClick={this.handleSubmit}>Submit</Button>
+      </Grid>
+
+<Grid item xs={5}></Grid>
+        <Grid item xs={2}><Paper className={classes.paper}>
+        <Button onClick={this.handleSubmit}>Submit</Button>
+        </Paper></Grid>
+<Grid item xs={5}></Grid>
+
+
     </form>
+    </Paper>
+    </Grid>
+    </Grid>
     <div>
         <h1>Games you've created</h1>
     </div>
@@ -160,6 +197,7 @@ deleteGame =(userId, gameId) => {
       {this.props.game.map(game => 
         <GameItem game={game} key={game.id} user={this.props.user.id} created={true} delete={this.deleteGame} />
       )}
+      
     </Grid>
     </div>
     )

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, withTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { MuiThemeProvider } from '@material-ui/core/styles/';
+import grey from '@material-ui/core/colors/grey'
+import { isAbsolute } from 'path';
 
 const styles = theme => ({
   root: {
@@ -14,7 +17,8 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
+    backgroundColor: 'grey',
   },
   container: {
     display: 'flex',
@@ -23,6 +27,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    backgroundColor: 'grey',
   },
   dense: {
     marginTop: 16,
@@ -31,6 +36,12 @@ const styles = theme => ({
     width: 200,
   },
 });
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {main: grey[500]},
+  }
+})
 
 class LoginPage extends Component {
 
@@ -76,45 +87,49 @@ class LoginPage extends Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
+        
           <Grid item xs={12}>
-            <h1>FRIENDS AND FLAGONS</h1>
+            <Paper className={classes.paper}><h1>FRIENDS AND FLAGONS</h1></Paper>
+          </Grid>
+         
+        </Grid>
+
+        <Grid container spacing={24}>
+          <Grid item xs={4}>
           </Grid>
           
-          
-          <Grid item xs={2}>
-          </Grid>
-          <Grid item xs={2}>
-          </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
+            <Paper className={classes.paper}>
               <TextField
-                id="filled-name"
-                label="User Name"
-                className={classes.textField}
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-                margin="normal"
-                variant="filled"
-                helperText="What is your username?"
-              />
+                  // id="filled-name"
+                  label="User Name"
+                  className={classes.textField}
+                  value={this.state.username}
+                  onChange={this.handleInputChangeFor('username')}
+                  // margin="normal"
+                  variant="filled"
+                  helperText="What is your username?"
+                />
+              <TextField
+                  // id="filled-password"
+                  type="password"
+                  label="Password"
+                  className={classes.textField}
+                  value={this.state.password}
+                  onChange={this.handleInputChangeFor('password')}
+                  // margin="normal"
+                  variant="filled"
+                  helperText="What is your password?"
+                />
+              
+             </Paper>
             </Grid>
-            <Grid item xs={2}>
-            <TextField
-                id="filled-password"
-                type="password"
-                label="Password"
-                className={classes.textField}
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-                margin="normal"
-                variant="filled"
-                helperText="What is your password?"
-              />
+            <Grid item xs={4}>
             </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={2}>
+
+          <Grid item xs={4}>
           </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={2}>
               <Paper className={classes.paper}>
               <Button
               className="log-in"
@@ -124,14 +139,21 @@ class LoginPage extends Component {
               onClick={this.loginRoute}
             >Login</Button>
             </Paper>
-            </Grid>
-
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>This will be the register button</Paper>
           </Grid>
-        </Grid>
-      </div>
+
+          <Grid item xs={2}>
+            <Paper className={classes.paper}>
+            <Button
+             type="button"
+             className="link-button"
+             onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+           >
+             Register
+           </Button>
+            </Paper>
+          </Grid>
+     </Grid>
+  </div>
     );
   }
 }

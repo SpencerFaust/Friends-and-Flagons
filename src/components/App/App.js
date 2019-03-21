@@ -29,12 +29,16 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {window.location.href.split('/').pop === 'login' ? <Nav /> : ''}
+        <Route 
+              path={/^(?!.*login).*$/}
+              component={Nav}
+            />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/login" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
+            
             <Route
               exact
               path="/about"
@@ -72,7 +76,7 @@ class App extends Component {
               component={CreateGame}
             />
             {/* If none of the other routes matched, we will show a 404. */}
-            <Route render={() => <h1>404</h1>} />
+            <Route render={() => <h1>404</h1>} /> 
           </Switch>
         </div>
       </Router>
