@@ -71,6 +71,7 @@ class Nav extends React.Component {
             </Typography>
             {this.props.user.id && (
               <div>
+                {this.props.user ? this.props.user.username : '' }
                 <IconButton
                   aria-owns={this.props.user.id ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
@@ -79,6 +80,7 @@ class Nav extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
+                
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}

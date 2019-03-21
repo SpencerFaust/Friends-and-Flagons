@@ -15,11 +15,23 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     width: '90%',
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
   },
   modalPaper: {
     position: 'absolute',
@@ -83,6 +95,10 @@ class CreateGame extends Component {
     this.props.dispatch({ type: 'CREATED_GAME'})
   }
 
+  imageChoice = image => {
+
+  };
+
   handleChange = (property) => (event) => {
     event.preventDefault();
     this.setState({
@@ -95,6 +111,8 @@ class CreateGame extends Component {
     console.log(this.state)
     if (this.state.gameName && this.state.maxPlayers && this.state.gameDescription && this.state.date && this.state.time && this.state.discord) {
       this.props.dispatch({ type: 'CREATE_GAME', payload: this.state })
+      this.handleClose();
+      alert('Your game has been created!')
     } else {
       alert('Please fill out all of the input boxes.')
     };
@@ -148,7 +166,7 @@ handleChange = propertyName => (event) => {
 }
 
 getSteps() {
-  return ['Your Games Name', 'How many players do you need?', 'Provide ptential players with a description of your game.', 'What date will you be playing?', 'What time will you be starting?', 'Provide a link to your Discord server.'];
+  return ['Your Games Name', 'How many players do you need?', 'Provide ptential players with a description of your game.', 'What date will you be playing?', 'What time will you be starting?', 'Provide a link to your Discord server.', 'Select the intended setting for your game.'];
 }
 
 getStepContent = (step) =>  {
@@ -233,10 +251,24 @@ getStepContent = (step) =>  {
               style = {{width: "80%"}}
               helperText="Make sure the link doesn't expire!"
             />;
+            case 6:
+              return <RadioGroup
+              aria-label="Game Image"
+              name="Dungeon"
+              className={this.props.classes.group}
+              value={this.state.gameImage}
+              onChange={this.handleChange('gameImage')}
+            >
+              <FormControlLabel value="http://dndspeak.com/wp-content/uploads/2018/03/cave_by_nele_diel-d655qw5.jpg" control={<Radio />} label="Dungeon" />
+              <FormControlLabel value="http://www.dndadventure.com/wp-content/uploads/2017/03/forest-1024x675.jpg" control={<Radio />} label="Forest" />
+              <FormControlLabel value="http://slyflourish.com/images/fantasy_town.jpg" control={<Radio />} label="Town" />
+              <FormControlLabel value="https://4.bp.blogspot.com/-Ky5YI1_hsjY/VGQ0BpspooI/AAAAAAAACVs/H8p4omIfJVs/s1600/153castle.jpg" control={<Radio />} label="Castle" />
+            </RadioGroup>;
     default:
       return 'Unknown step';
   }
 }
+
 
 
 deleteGame =(userId, gameId) => {
@@ -281,7 +313,7 @@ deleteGame =(userId, gameId) => {
               Enter your Game information!
             </Typography>
             <div className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical">
+        <Stepper activeStep={activeStep} orientation="vertical" style={{overflowY: 'scroll'}}>
           {steps.map((label, index) => (
             <Step key={label} change={this.handleChange}  >
               <StepLabel>{label}</StepLabel>

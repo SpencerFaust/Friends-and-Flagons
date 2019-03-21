@@ -99,7 +99,6 @@ class GameItem extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={this.props.key}>
       <Card className={classes.card}>
@@ -117,7 +116,7 @@ class GameItem extends React.Component {
         />
         <CardMedia
           className={classes.media}
-          image="http://dndspeak.com/wp-content/uploads/2018/03/cave_by_nele_diel-d655qw5.jpg"
+          image={this.props.game.game_img}
           title="Dungeon Image"
         />
         <CardContent>
