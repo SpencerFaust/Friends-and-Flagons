@@ -19,7 +19,6 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.primary,
     backgroundColor: 'grey',
-    padding: 5,
   },
   container: {
     display: 'flex',

@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/mine', (req, res) => {
-    pool.query(`SELECT "game"."id", "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
+    pool.query(`SELECT "game"."id", "creator_id", "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
     FROM "game_roster"
     JOIN "user" ON "user"."id" = "game_roster"."player_id"
     JOIN "game" ON "game_roster"."game_id" = "game"."id"
@@ -54,10 +54,14 @@ router.post('/create', (req, res, next) => {
   const gameImage = req.body.gameImage;
   const discord = req.body.discord;
   const creator = req.body.creator;
-  const queryText = `INSERT INTO "game" ("game_name", "max_players", "game_description", "date", "time", "creator_id", "game_img", "discord")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+  const queryText = `WITH new_game AS (
+            INSERT INTO "game" ("game_name", "max_players", "game_description", "date", "time", "creator_id", "game_img", "discord")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id" )
+        INSERT INTO "game_roster" ("player_id", "game_id")
+        VALUES ( $9, (SELECT "id" FROM new_game)
+        );`;
 
-  pool.query(queryText, [gameName, maxPlayers, gameDescription, date, time, creator, gameImage, discord])
+  pool.query(queryText, [gameName, maxPlayers, gameDescription, date, time, creator, gameImage, discord, creator])
     .then(() => res.sendStatus(201))
     .catch(() => res.sendStatus(500));
 });

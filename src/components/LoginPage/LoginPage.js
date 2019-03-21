@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RegisterPage from '../RegisterPage/RegisterPage';
 import PropTypes from 'prop-types';
-import { withStyles, createMuiTheme, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { MuiThemeProvider } from '@material-ui/core/styles/';
-import grey from '@material-ui/core/colors/grey'
-import { isAbsolute } from 'path';
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
 
 const styles = theme => ({
   root: {
@@ -19,6 +19,17 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.primary,
     backgroundColor: 'grey',
+  },
+  modalPaper: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: theme.spacing.unit * 50,
+    backgroundColor: 'grey',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none',
   },
   container: {
     display: 'flex',
@@ -37,23 +48,18 @@ const styles = theme => ({
   },
 });
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {main: grey[500]},
-  }
-})
-
 class LoginPage extends Component {
 
   state = {
     username: '',
     password: '',
+    open: false,
   };
 
   loginRoute = (event) => {
     event.preventDefault();
     this.login(event);
-    this.props.history.push('/about');
+    this.props.history.push('/games');
   }
 
   login = (event) => {
@@ -68,6 +74,7 @@ class LoginPage extends Component {
         },
       });
     } else {
+      alert('Incorrect Username and Password combination!');
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
   } // end login
@@ -79,6 +86,20 @@ class LoginPage extends Component {
     });
   }
 
+  openRegister = () => {
+    this.props.dispatch({type: 'SET_TO_REGISTER_MODE'});
+    this.handleOpen();
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.props.dispatch({type: 'SET_TO_LOGIN_MODE'});
+    this.setState({ open: false });
+  };
+  
   render() {
   const { classes } = this.props;
 
@@ -86,6 +107,14 @@ class LoginPage extends Component {
 
     return (
       <div className={classes.root}>
+      {this.props.errors.loginMessage && (
+          <h2
+            className="alert"
+            role="alert"
+          >
+            {this.props.errors.loginMessage}
+          </h2>
+        )}
         <Grid container spacing={24}>
         
           <Grid item xs={12}>
@@ -146,10 +175,25 @@ class LoginPage extends Component {
             <Button
              type="button"
              className="link-button"
-             onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+             onClick={this.openRegister}
            >
              Register
            </Button>
+
+           <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <div className={classes.modalPaper}>
+            <Typography variant="h6" id="modal-title" style={{textAlign: 'center'}}>
+              Thank you for registering!
+            </Typography>
+            <RegisterPage />
+          </div>
+        </Modal>
+
             </Paper>
           </Grid>
      </Grid>
@@ -200,14 +244,14 @@ export default connect(mapStateToProps)(withStyles(styles)(LoginPage));
 //   render() {
 //     return (
 //       <div>
-//         {this.props.errors.loginMessage && (
-//           <h2
-//             className="alert"
-//             role="alert"
-//           >
-//             {this.props.errors.loginMessage}
-//           </h2>
-//         )}
+        // {this.props.errors.loginMessage && (
+        //   <h2
+        //     className="alert"
+        //     role="alert"
+        //   >
+        //     {this.props.errors.loginMessage}
+        //   </h2>
+        // )}
 //         <form onSubmit={this.login}>
 //           <h1>Login</h1>
 //           <div>

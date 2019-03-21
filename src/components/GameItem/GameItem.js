@@ -123,17 +123,19 @@ class GameItem extends React.Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           
-          {this.props.created ? '' :
-          !this.props.mygames ? 
+
+
+
+
+
+
+         
+
+          
+
+          {this.props.game.creator_id === this.props.user ? 'You created this game.' :
+          this.props.mygames ?
           <>
-          <IconButton 
-            aria-label="Sign up for this game"
-            onClick={this.handleClickOpen}>
-            <AddCircleOutline />
-            
-          </IconButton>
-        <Typography component="p">Sign up</Typography> 
-        </> : <>
           <IconButton 
             aria-label="Leave this game"
             onClick={this.handleClickOpen}>
@@ -141,7 +143,27 @@ class GameItem extends React.Component {
             
           </IconButton>
         <Typography component="p">Leave Game</Typography> 
-        </>}
+        </>
+         :
+         
+         <>
+         <IconButton 
+           aria-label="Sign up for this game"
+           onClick={this.handleClickOpen}>
+           <AddCircleOutline />
+           
+         </IconButton>
+       <Typography component="p">Sign up</Typography> 
+       </>
+          
+        }
+
+
+
+
+
+
+
 
           <IconButton
             className={classnames(classes.expand, {
