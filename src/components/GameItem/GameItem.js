@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -59,6 +60,10 @@ class GameItem extends React.Component {
     open: false,
   };
 
+  lobbyURL = () => {
+    this.props.history.push('/lobby/' + this.props.game.id + '-' + this.props.game.game_name)
+  };
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -99,7 +104,6 @@ class GameItem extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log('Count and player max', Number(this.props.game.count), this.props.game.max_players)
     
     return (
       <>
@@ -189,7 +193,8 @@ class GameItem extends React.Component {
 
 
             <Typography paragraph>
-              {this.props.game.game_description}
+              {this.props.game.game_description} <br />
+              <Button style={{marginTop: 5}} onClick={this.lobbyURL} >Game Lobby</Button>
             </Typography>
           </CardContent>
         </Collapse>
@@ -279,4 +284,4 @@ GameItem.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(GameItem);
+export default withStyles(styles)(withRouter(GameItem));
