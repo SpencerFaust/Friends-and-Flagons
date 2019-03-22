@@ -6,10 +6,17 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     console.log('DB game GET request hit.')
-    pool.query(`SELECT * FROM "game"
+    pool.query(`WITH "not_my_games" AS (SELECT * FROM "game" 
+    JOIN "game_roster" ON "game"."id" = "game_roster"."game_id"
     WHERE "game"."id" NOT IN (SELECT game_id FROM "game_roster"
     JOIN "game" ON "game"."id" = "game_roster"."game_id"
-    AND "game_roster"."player_id" = $1);`, [req.user.id]).then((response) => {
+    AND "game_roster"."player_id" = $1)),
+    "game_player_count" AS (SELECT "game_id", COUNT("game_id")
+    FROM "game_roster"
+    GROUP BY "game_id")
+    SELECT * FROM "not_my_games"
+    JOIN "game_player_count" ON "not_my_games"."game_id"="game_player_count"."game_id"
+    ;`, [req.user.id]).then((response) => {
         console.log('Game GET server response:', response.rows)
         res.send(response.rows)
     }).catch((error) => {

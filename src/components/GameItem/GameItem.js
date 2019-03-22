@@ -99,9 +99,15 @@ class GameItem extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log('Count and player max', Number(this.props.game.count), this.props.game.max_players)
+    
     return (
+      <>
+        {this.props.game.count < (this.props.game.max_players + 1) || this.props.mygames ? 
       <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={this.props.key}>
       <Card className={classes.card}>
+        
+      {this.props.game.creator_id === this.props.user ? 
         <CardHeader
           action={
             <IconButton 
@@ -111,9 +117,16 @@ class GameItem extends React.Component {
             
           </IconButton>
           }
+          
+          title={this.props.game.game_name}
+          subheader= {this.dateTime()}
+        /> 
+        :
+        <CardHeader
           title={this.props.game.game_name}
           subheader= {this.dateTime()}
         />
+      }
         <CardMedia
           className={classes.media}
           image={this.props.game.game_img}
@@ -246,7 +259,9 @@ class GameItem extends React.Component {
         </Dialog>
       }
 
-      </Grid>
+      </Grid> 
+       : '' }
+      </>
     );
   }
 }

@@ -9,8 +9,14 @@ import Grid from '@material-ui/core/Grid';
 // and then instead of `props.user.username` you could use `user.username`
 class Games extends Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('Browse Games'),
+    };
+  };
+
   componentDidMount() {
-    console.log('Component Mounted.')
+    console.log('Count:', Number(this.props.game.count))
     this.props.dispatch({ type: 'FETCH_GAME', payload: this.props.user.id})
   }
 
@@ -20,12 +26,12 @@ class Games extends Component {
   }
 
   render() {
-
     return(
       <Grid container spacing={24}>
           {this.props.game.map(game => 
             <GameItem game={game} key={game.id} user={this.props.user.id} joinGame={this.addGame} />
           )}
+          
         </Grid>
       );
     }
