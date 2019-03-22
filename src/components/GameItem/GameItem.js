@@ -103,29 +103,38 @@ class GameItem extends React.Component {
     
     return (
       <>
-        {this.props.game.count < (this.props.game.max_players + 1) || this.props.mygames ? 
+        {this.props.game.count < (this.props.game.max_players + 1) || this.props.mygames ||this.props.created ? 
       <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={this.props.key}>
       <Card className={classes.card}>
         
+
+
+
+
       {this.props.game.creator_id === this.props.user ? 
+      
         <CardHeader
           action={
             <IconButton 
             aria-label="Delete this game"
             onClick={this.handleClickOpen}>
             <Cancel />
-            
           </IconButton>
           }
-          
           title={this.props.game.game_name}
-          subheader= {this.dateTime()}
+          subheader= {`${this.dateTime()}`} 
         /> 
         :
-        <CardHeader
+          this.props.mygames ?
+          <CardHeader
           title={this.props.game.game_name}
-          subheader= {this.dateTime()}
+          subheader= {`${this.dateTime()}`}
         />
+        
+        : <CardHeader
+        title={this.props.game.game_name}
+        subheader= {`${this.dateTime()} Needs ${this.props.game.max_players - (Number(this.props.game.count) - 1)} players.`}
+      />
       }
         <CardMedia
           className={classes.media}
@@ -242,10 +251,10 @@ class GameItem extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Join this game?"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Please be certian you are available on {this.dateTime()} before agreeing to participate in this game.
+              Please be certain you are available on {this.dateTime()} before agreeing to participate in this game.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
