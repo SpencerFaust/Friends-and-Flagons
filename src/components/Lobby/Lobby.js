@@ -13,10 +13,16 @@ const styles = theme => ({
       padding: theme.spacing.unit * 2,
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      backgroundColor: 'red',
     },
   });
 
 class Lobby extends Component {
+
+    componentDidMount() {
+
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -25,22 +31,12 @@ class Lobby extends Component {
             <Grid item xs={12}>
             <Paper className={classes.paper}>xs=12</Paper>
             </Grid>
-            <Grid item xs={6}>
-            <Paper className={classes.paper}>xs=6</Paper>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item xs={6}>
-            <Paper className={classes.paper}>xs=6</Paper>
+            <Grid item xs={8}>
+            <Paper className={classes.paper} style={{color: 'blue'}}>xs=6</Paper>
             </Grid>
-            <Grid item xs={3}>
-            <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
-            <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
-            <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
             <Paper className={classes.paper}>xs=3</Paper>
             </Grid>
         </Grid>
