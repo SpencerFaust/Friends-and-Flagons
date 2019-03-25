@@ -8,6 +8,10 @@ const sessionMiddleware = require('./modules/session-middleware');
 
 const passport = require('./strategies/user.strategy');
 
+//Socket.io install
+const http = require('http').Server(app);
+const io = require ('socket.io')(http);
+
 // Route includes
 const userRouter = require('./routes/user.router');
 const gameRouter = require('./routes/game.router');
@@ -27,6 +31,35 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/game', gameRouter);
 
+const getVisitors = () => {
+  const clients = io.sockets.clients().connected;
+  const sockets = Object.values(clients);
+  const users = sockets.map(s => s.user);
+  return users;
+};
+
+const emitVisitors = () => {
+  io.emit('visitors', getVisitors()); 
+}
+
+//Socket connection (announces user connection).
+io.on('connection', (client) => {
+  console.log(`A user connected.`);
+
+  client.on('new_visitor', user => {
+    client.user = user;
+    console.log('New user:', user);
+    emitVisitors();
+  })
+  
+  //Anncounces user disconnect.
+  client.on('disconnect', () => {
+    emitVisitors();
+    console.log('A user has disconnected.')
+  });
+
+});
+
 // Serve static files
 app.use(express.static('build'));
 
@@ -34,6 +67,7 @@ app.use(express.static('build'));
 const PORT = process.env.PORT || 5000;
 
 /** Listen * */
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
