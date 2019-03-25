@@ -20,6 +20,16 @@ function* fetchMyGame() {
     }
   }
 
+  function* fetchLobbyGame(action) {
+    try {
+      console.log('Lobby Fetch hit with payload:');
+      const response = yield axios.get('api/game/lobby/' + action.payload);
+      yield put({ type: 'SET_GAMES', payload: response.data });
+    } catch (error) {
+      console.log('Lobby Fetch error:', error);
+    }
+  }
+
   function* fetchCreatedGame() {
     try {
       const response = yield axios.get('api/game/created');
@@ -72,6 +82,7 @@ function* fetchMyGame() {
 function* userSaga() {
   yield takeLatest('FETCH_GAME', fetchGame);
   yield takeLatest('FETCH_MY_GAME', fetchMyGame);
+  yield takeLatest('FETCH_LOBBY_GAME', fetchLobbyGame);
   yield takeLatest('CREATE_GAME', createGame);
   yield takeLatest('CREATED_GAME', fetchCreatedGame);
   yield takeLatest('JOIN_GAME', joinGame);

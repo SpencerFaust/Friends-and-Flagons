@@ -38,6 +38,19 @@ router.get('/mine', (req, res) => {
     });
 });
 
+router.get('/lobby/:id', (req, res) => {
+    console.log('Game ID:', req.params)
+    pool.query(`SELECT * FROM "game"
+    JOIN "game_roster" ON "game_roster"."game_id" = "game"."id"
+    WHERE "id" = $1;`, [req.params.id]).then((response) => {
+        console.log('Game GET server response:', response.rows)
+        res.send(response.rows)
+    }).catch((error) => {
+        console.log('Game GET error:', error)
+        res.sendStatus(500);
+    });
+});
+
 router.get('/created', (req, res) => {
     pool.query(`SELECT "id", "creator_id", "game_name", "max_players", "game_description", "date", "time", "game_img", "discord"
     FROM "game"

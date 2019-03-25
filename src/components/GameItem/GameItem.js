@@ -61,7 +61,7 @@ class GameItem extends React.Component {
   };
 
   lobbyURL = () => {
-    this.props.history.push('/lobby/' + this.props.game.id + '-' + this.props.game.game_name)
+    this.props.history.push('/lobby/' + this.props.game.id)
   };
 
   handleExpandClick = () => {

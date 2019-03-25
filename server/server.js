@@ -28,37 +28,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/index.html');
+// });
 app.use('/api/user', userRouter);
 app.use('/api/game', gameRouter);
 
-const getVisitors = () => {
-  const clients = io.sockets.clients().connected;
-  const sockets = Object.values(clients);
-  const users = sockets.map(s => s.user);
-  return users;
-};
+// const getVisitors = () => {
+//   const clients = io.sockets.clients().connected;
+//   const sockets = Object.values(clients);
+//   const users = sockets.map(s => s.user);
+//   return users;
+// };
 
-const emitVisitors = () => {
-  io.emit('visitors', getVisitors()); 
-}
+// const emitVisitors = () => {
+//   io.emit('visitors', getVisitors()); 
+// }
 
 //Socket connection (announces user connection).
-io.on('connection', (client) => {
+io.on('connection', (socket) => {
   console.log(`A user connected.`);
 
-  client.on('new_visitor', user => {
-    client.user = user;
-    console.log('New user:', user);
-    emitVisitors();
+  socket.on('new_message', message => {
+    console.log('New message:', message);
+    io.emit('receive_message', message)
+    // emitVisitors();
   })
   
   //Anncounces user disconnect.
-  client.on('disconnect', () => {
-    emitVisitors();
-    console.log('A user has disconnected.')
-  });
-
-});
+//   client.on('disconnect', () => {
+//     emitVisitors();
+//     console.log('A user has disconnected.')
+//   });
+// });
 
 // Serve static files
 app.use(express.static('build'));
