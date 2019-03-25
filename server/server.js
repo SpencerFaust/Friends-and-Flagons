@@ -34,33 +34,18 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/game', gameRouter);
 
-// const getVisitors = () => {
-//   const clients = io.sockets.clients().connected;
-//   const sockets = Object.values(clients);
-//   const users = sockets.map(s => s.user);
-//   return users;
-// };
+io.on('connection', socket => {
+  console.log('Socket connected.')
 
-// const emitVisitors = () => {
-//   io.emit('visitors', getVisitors()); 
-// }
+  socket.on('disconnect', socket => {
+    console.log('Socket disconnected.')
+  });
 
-//Socket connection (announces user connection).
-io.on('connection', (socket) => {
-  console.log(`A user connected.`);
-
-  socket.on('new_message', message => {
-    console.log('New message:', message);
-    io.emit('receive_message', message)
-    // emitVisitors();
+  socket.on('chat message', (message) => {
+    console.log('New message:', message)
+    io.emit('chat message', message)
   })
-  
-  //Anncounces user disconnect.
-//   client.on('disconnect', () => {
-//     emitVisitors();
-//     console.log('A user has disconnected.')
-//   });
-// });
+});
 
 // Serve static files
 app.use(express.static('build'));
