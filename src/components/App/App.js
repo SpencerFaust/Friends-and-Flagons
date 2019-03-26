@@ -22,7 +22,7 @@ import Lobby from '../Lobby/Lobby';
 import './App.css';
 
 class App extends Component {
-  componentDidMount () {
+  componentWillMount () {
     this.props.dispatch({type: 'FETCH_USER'})
   }
 

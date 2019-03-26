@@ -124,7 +124,7 @@ class Lobby extends Component {
             <Paper className={classes.paper}><Typography variant='h3'>{this.props.game[0] && this.props.game[0].game_name}</Typography></Paper>
           </Grid>
           
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4} lg={3} xl={2}>
             <Paper className={classes.paper} style={{height: '32vw'}}>
               <Typography variant='h5'>Roll Dice</Typography> <br />
               <Button onClick={this.rollDie('D4')}>    
@@ -150,7 +150,7 @@ class Lobby extends Component {
               </Button> 
             </Paper>
           </Grid>
-            <Grid item xs={12} sm={9}>
+            <Grid item xs={12} sm={8} lg={9} xl={10}>
             <Paper className={classes.paper} style={{height: '32vw', position: 'relative'}}>
             <div>
               <div id="messages" style={{overflowWrap: 'break-word', overflow: 'scroll', position: 'absolute', bottom: 5, width: '100%', textAlign: 'left',  color: 'black'}} >
