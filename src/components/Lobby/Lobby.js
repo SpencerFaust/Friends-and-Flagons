@@ -24,13 +24,27 @@ class Lobby extends Component {
 
     state = {
       message: '',
+      chatMessages: [],
     };
 
+    componentWillMount = () => {
+      this.props.dispatch({ type: `FETCH_LOBBY_GAME`, payload: this.props.match.params.id})
+    }
+
+    mySocket = io();
+
+    // newMessage = () => {
+    //   this.mySocket.on('chat message', message => {
+    //     console.log('New message:', message)
+    //     return <li>{this.message}</li>
+    //   })
+    // }
+
     messageUpdate = () => {
-      const socket = io();
-      socket.emit('chat message', this.state.message);
+      this.mySocket.emit('chat message', `${this.props.user.username}: ${this.state.message}`);
           return false;
         };
+      
       
     // getMessage = () => {
     //   const socket = io();
@@ -42,20 +56,26 @@ class Lobby extends Component {
       this.setState({
         message: event.target.value,
       });
-      console.log(this.state.message)
     };
 
     roster = () => this.props.game.map(player => player.player_id);
 
     componentDidMount() { 
-      this.props.dispatch({ type: `FETCH_LOBBY_GAME`, payload: this.props.match.params.id})
-    };
+      this.mySocket.on('chat message', message => {
+        console.log('New message:', message);
+        this.setState({
+          chatMessages: [
+            ...this.state.chatMessages,
+            message,
+          ],
+        });
+      });
+  };
 
     render() {
         const { classes } = this.props;
-        const socket = io();
 
-        console.log('GAME INFO:', this.props.game)
+        // console.log('GAME INFO:', this.props.game)
         
         return (
             <div className={classes.root}>
@@ -63,7 +83,7 @@ class Lobby extends Component {
             <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ul id="messages">
-                {/* {socket.on('chat message', )} */}
+                {this.state.chatMessages.map(message => <li>{message}</li>)}
               </ul>
               <input id="m" type="text" onChange={this.onChange} />
               <button onClick={this.messageUpdate}>Submit</button>
