@@ -45,6 +45,11 @@ io.on('connection', socket => {
     console.log('New message:', message)
     io.emit('chat message', message)
   })
+
+  socket.on('die roll', (message) => {
+    console.log('New message:', message)
+    io.emit('die roll', message)
+  })
 });
 
 // Serve static files
