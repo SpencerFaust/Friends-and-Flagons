@@ -30,11 +30,18 @@ class Lobby extends Component {
       playerAllowed: true,
     };
 
+    messagesEnd = React.createRef()
+
+    componentDidUpdate() {
+      this.scrollToBottom();
+    }
+
     componentWillMount() {
       this.props.dispatch({ type: `FETCH_LOBBY_GAME`, payload: this.props.match.params.id})
     };
 
     componentDidMount() { 
+      this.scrollToBottom();
       this.mySocket.on('chat message', message => {
         console.log('New message:', message);
         this.setState({
@@ -44,6 +51,8 @@ class Lobby extends Component {
           ],
         });
       });
+
+      
 
       this.mySocket.on('die roll', message => {
         console.log('New message:', message);
@@ -101,6 +110,10 @@ class Lobby extends Component {
       });
     };
 
+    scrollToBottom = () => {
+      this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
     render() {
         const { classes } = this.props;
         
@@ -139,9 +152,15 @@ class Lobby extends Component {
           </Grid>
             <Grid item xs={12} sm={9}>
             <Paper className={classes.paper} style={{height: '32vw', position: 'relative'}}>
-            <div >
-              <div id="messages" style={{overflowWrap: 'break-word', position: 'absolute', bottom: 5, width: '100%', textAlign: 'left',  color: 'black'}} >
-                {this.state.chatMessages.map(message => <p key={message}>{message}</p>)}
+            <div>
+              <div id="messages" style={{overflowWrap: 'break-word', overflow: 'scroll', position: 'absolute', bottom: 5, width: '100%', textAlign: 'left',  color: 'black'}} >
+                <div id="msgWindow" style={{positon: 'absolute', maxHeight: 320, overflow: 'auto'}}>
+                  {this.state.chatMessages.map(message => <p key={message}>{message}</p>)}
+                  <div style={{ float:"left", clear: "both" }}
+                    ref={(el) => { this.messagesEnd = el; }}>
+                  </div>
+                </div>
+                
               {/* </div>
               <div  style={{position: 'absolute', bottom: 20, width: '100%'}}> */}
               <TextField

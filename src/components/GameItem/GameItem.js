@@ -189,13 +189,14 @@ class GameItem extends React.Component {
           <CardContent>
 
           {/* This will conditionally render the Discord link if the user is viewing within MyGames page. */}
-          {!this.props.mygames ? '' : <Typography paragraph> {this.props.game.discord} </Typography>}
-
-
-            <Typography paragraph>
-              {this.props.game.game_description} <br />
+          {this.props.mygames || this.props.created ? 
+            <Typography paragraph style={{margin: 5}}> 
+              {this.props.game.game_description} <br/>
+              Discord: {this.props.game.discord} <br/>
               <Button style={{marginTop: 5}} onClick={this.lobbyURL} >Game Lobby</Button>
-            </Typography>
+               </Typography>
+            :
+            <Typography paragraph>{this.props.game.game_description}</Typography> }
           </CardContent>
         </Collapse>
 

@@ -127,7 +127,7 @@ class LoginPage extends Component {
           <Grid item xs={4}>
           </Grid>
           
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
             <Paper className={classes.paper}>
               <TextField
                   // id="filled-name"
@@ -158,7 +158,7 @@ class LoginPage extends Component {
 
           <Grid item xs={4}>
           </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={2}>
               <Paper className={classes.paper}>
               <Button
               className="log-in"
@@ -170,7 +170,7 @@ class LoginPage extends Component {
             </Paper>
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid item xs={6} sm={2}>
             <Paper className={classes.paper}>
             <Button
              type="button"
