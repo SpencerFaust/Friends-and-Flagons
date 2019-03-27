@@ -63,7 +63,6 @@ class Nav extends React.Component {
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log(this.props.title)
 
     return (
       <div className={classes.root} >
@@ -109,13 +108,13 @@ class Nav extends React.Component {
                 >
 
                 { this.props.user.id ?
-                <>
-                  <Link className="nav-link" to="/games" style={{textDecoration: 'none', }}><MenuItem className={classes.menuItem} onClick={this.handleClose}>Games</MenuItem></Link>
-                  <Link className="nav-link" to="/mygames" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>My Games</MenuItem></Link>
-                  <Link className="nav-link" to="/creategame" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>Create Game</MenuItem></Link>
-                  <Link className="nav-link" to="/about" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>About F&F</MenuItem></Link>
-                  <Link className="nav-link" to="/login" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.logOut}>Log Out</MenuItem></Link>
-                </>
+                [
+                  <Link className="nav-link" to="/games" style={{textDecoration: 'none', }}><MenuItem className={classes.menuItem} onClick={this.handleClose}>Games</MenuItem></Link>,
+                  <Link className="nav-link" to="/mygames" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>My Games</MenuItem></Link>,
+                  <Link className="nav-link" to="/creategame" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>Create Game</MenuItem></Link>,
+                  <Link className="nav-link" to="/about" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.handleClose}>About F&F</MenuItem></Link>,
+                  <Link className="nav-link" to="/login" style={{textDecoration: 'none'}}><MenuItem className={classes.menuItem} onClick={this.logOut}>Log Out</MenuItem></Link>,
+                ]
                   : '' }
 
                 </Menu>

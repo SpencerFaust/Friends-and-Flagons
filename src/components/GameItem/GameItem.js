@@ -118,15 +118,12 @@ class GameItem extends React.Component {
     
     return (
       <>
-      {/* <Switch checked={checked} onChange={this.handleChange} aria-label="Collapse" /> */}
-        <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
-      <>
         {this.props.game.count < (this.props.game.max_players + 1) || this.props.mygames ||this.props.created ? 
+        <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={this.props.key}>
       <Card className={classes.card}>
 
       {this.props.game.creator_id === this.props.user ? 
-      
         <CardHeader
           action={
             <IconButton 
@@ -138,17 +135,17 @@ class GameItem extends React.Component {
           title={this.props.game.game_name}
           subheader= {`${this.dateTime()}`} 
         /> 
-        :
-          this.props.mygames ?
-          <CardHeader
+      :
+      this.props.mygames ?
+        <CardHeader
           title={this.props.game.game_name}
           subheader= {`${this.dateTime()}`}
         />
         
-        : <CardHeader
-        title={this.props.game.game_name}
-        subheader= {`${this.dateTime()} Needs ${this.props.game.max_players - (Number(this.props.game.count) - 1)} players.`}
-      />
+      : <CardHeader
+          title={this.props.game.game_name}
+          subheader= {`${this.dateTime()} Needs ${this.props.game.max_players - (Number(this.props.game.count) - 1)} players.`}
+        />
       }
         <CardMedia
           className={classes.media}
@@ -285,9 +282,9 @@ class GameItem extends React.Component {
       }
 
       </Grid> 
+      </Slide>
        : '' }
-       </>
-        </Slide>
+    
       </>
     );
   }

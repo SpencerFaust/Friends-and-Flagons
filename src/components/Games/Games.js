@@ -22,11 +22,13 @@ class Games extends Component {
 
   render() {
     return(
+      <>
       <Grid container spacing={24}>
         {this.props.game.map(game => 
           <GameItem game={game} key={game.id} user={this.props.user.id} joinGame={this.addGame} />
         )}
       </Grid>
+      </>
       );
     }
   }
