@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -37,7 +36,6 @@ class Nav extends React.Component {
   logOut = (event) => {
     event.preventDefault();
     this.props.dispatch({ type: 'LOGOUT' });
-    
     this.handleClose(event);
   };
 
@@ -57,20 +55,22 @@ class Nav extends React.Component {
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
+    console.log(this.props.title)
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <AppBar position="static" style = {{
-            backgroundColor: 'grey', 
-            color: 'black', 
+            backgroundColor: 'black', 
+            color: 'white', 
             margin: '0px',
-            marginBottom: '10px'}}>
+            marginBottom: '10px',
+            }}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            <Typography variant="h6" className={classes.grow} style={{color: 'white', backgroundColor: 'none',}}>
               Friends and Flagons
             </Typography>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              
+            <Typography variant="h8" className={classes.grow}>
+              {this.props.title}
             </Typography>
             {this.props.user.id && (
               <div>
@@ -100,26 +100,15 @@ class Nav extends React.Component {
                 >
 
                 { this.props.user.id ?
-                  <MenuItem onClick={this.handleClose}>
-                    <Button><Link  to="/games">Games</Link></Button>
-                  </MenuItem>  : '' }
+                <>
+                  <Link className="nav-link" to="/games" style={{textDecoration: 'none', }}><MenuItem onClick={this.handleClose}>Games</MenuItem></Link>
+                  <Link className="nav-link" to="/mygames" style={{textDecoration: 'none'}}><MenuItem onClick={this.handleClose}>My Games</MenuItem></Link>
+                  <Link className="nav-link" to="/creategame" style={{textDecoration: 'none'}}><MenuItem onClick={this.handleClose}>Create Game</MenuItem></Link>
+                  <Link className="nav-link" to="/about" style={{textDecoration: 'none'}}><MenuItem onClick={this.handleClose}>About F&F</MenuItem></Link>
+                  <Link className="nav-link" to="/login" style={{textDecoration: 'none'}}><MenuItem onClick={this.logOut}>Log Out</MenuItem></Link>
+                </>
+                  : '' }
 
-                  { this.props.user.id ?
-                  <MenuItem onClick={this.handleClose}>
-                   <Link className="nav-link" to="/mygames">My Games</Link>
-                  </MenuItem>  : '' }
-
-                  { this.props.user.id ?
-                  <MenuItem onClick={this.handleClose}>
-                   <Link className="nav-link" to="/creategame">Create Game</Link>
-                  </MenuItem>  : '' }
-                
-                  <MenuItem onClick={this.handleClose}>
-                    <Link className="nav-link" to="/about">About F&F</Link>
-                  </MenuItem>
-
-                  {this.props.user.id ? <MenuItem onClick={this.logOut}><Link className="nav-link" to="/login">Log Out</Link></MenuItem> : ''}
-                  
                 </Menu>
               </div>
             )}
@@ -139,153 +128,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Nav));
-
-
-//   handleToggle = () => {
-//     this.setState(state => ({ open: !state.open }));
-//   };
-
-//   handleClose = event => {
-//     if (this.anchorEl.contains(event.target)) {
-//       return;
-//     }
-
-//     this.setState({ open: false });
-//   };
-
-//   render() {
-//     const { classes } = this.props;
-//     const { open } = this.state;
-
-//     return (
-//       <div className={classes.root}>
-//       <AppBar position="static" color="default">
-//         <Toolbar>
-//           <Typography variant='h6' color="inherit">
-
-//           <div>
-//           <Button
-//             buttonRef={node => {
-//               this.anchorEl = node;
-//             }}
-//             aria-owns={open ? 'menu-list-grow' : undefined}
-//             aria-haspopup="true"
-//             onClick={this.handleToggle}
-//           >
-//             Menu
-//           </Button>
-//           <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-//             {({ TransitionProps, placement }) => (
-//               <Grow
-//                 {...TransitionProps}
-//                 id="menu-list-grow"
-//                 style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-//               >
-//                 <Paper>
-//                   <ClickAwayListener onClickAway={this.handleClose}>
-//                     <MenuList>    
-
-                    // { this.props.user.id ?
-                    //   <MenuItem onClick={this.handleClose}>
-                    //     <Link className="nav-link" to="/games">Games</Link>
-                    //   </MenuItem>  : '' }
-
-                    //   { this.props.user.id ?
-                    //   <MenuItem onClick={this.handleClose}>
-                    //    <Link className="nav-link" to="/mygames">My Games</Link>
-                    //   </MenuItem>  : '' }
-
-                    //   { this.props.user.id ?
-                    //   <MenuItem onClick={this.handleClose}>
-                    //    <Link className="nav-link" to="/creategame">Create Game</Link>
-                    //   </MenuItem>  : '' }
-                    
-                    //   <MenuItem onClick={this.handleClose}>
-                    //     <Link className="nav-link" to="/about">About F&F</Link>
-                    //   </MenuItem>
-
-                    //   {this.props.user.id ? <MenuItem onClick={this.logOut}>Log Out</MenuItem> : ''}
-                      
-
-//                     </MenuList>
-//                   </ClickAwayListener>
-//                 </Paper>
-//               </Grow>
-//             )}
-//           </Popper>
-//         </div>
-
-//           </Typography>
-//         </Toolbar>
-//       </AppBar>
-        
-//       </div>
-//     );
-//   }
-// }
-
-// Nav.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// const mapStateToProps = state => ({
-//   user: state.user,
-// });
-
-// export default connect(mapStateToProps)(withStyles(styles)(Nav));
-
-
-
-
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import LogOutButton from '../LogOutButton/LogOutButton';
-// import './Nav.css';
-
-// const Nav = (props) => (
-//   <div className="nav">
-//     <Link to="/about">
-//       <h2 className="nav-title">Friends and Flagons</h2>
-//     </Link>
-//     <div className="nav-right">
-//       <Link className="nav-link" to="/home">
-//         {/* Show this link if they are logged in or not,
-//         but call this link 'Home' if they are logged in,
-//         and call this link 'Login / Register' if they are not */}
-//         {props.user.id ? 'Games' : 'Login / Register'}
-//       </Link>
-//       <Link className="nav-link" to="/about">
-//         About
-//       </Link>
-//       {/* Show the link to the info page and the logout button if the user is logged in */}
-//       {props.user.id && (
-//         <>
-//           <Link className="nav-link" to="/profile">
-//             Profile
-//           </Link>
-//           <Link className="nav-link" to="/mygames">
-//             My Games
-//           </Link>
-//           <Link className="nav-link" to="/creategame">
-//             Create Game
-//           </Link>
-//           <LogOutButton className="nav-link"/>
-//         </>
-//       )}
-//       {/* Always show this link since the about page is not protected */}
-
-//     </div>
-//   </div>
-// );
-
-// // Instead of taking everything from state, we just want the user
-// // object to determine if they are logged in
-// // if they are logged in, we show them a few more links 
-// // if you wanted you could write this code like this:
-// // const mapStateToProps = ({ user }) => ({ user });
-// const mapStateToProps = state => ({
-//   user: state.user,
-// });
-
-// export default connect(mapStateToProps)(Nav);

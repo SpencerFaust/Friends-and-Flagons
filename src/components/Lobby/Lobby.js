@@ -52,8 +52,6 @@ class Lobby extends Component {
         });
       });
 
-      
-
       this.mySocket.on('die roll', message => {
         console.log('New message:', message);
         this.setState({
