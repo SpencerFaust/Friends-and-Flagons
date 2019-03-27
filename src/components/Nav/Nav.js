@@ -77,7 +77,7 @@ class Nav extends React.Component {
             <Typography variant="h6" className={classes.grow} style={{color: 'white', backgroundColor: 'none',}}>
               Friends and Flagons
             </Typography>
-            <Typography variant="h8" className={classes.grow}>
+            <Typography variant="h6" className={classes.grow}>
               {this.props.title}
             </Typography>
             {this.props.user.id && (

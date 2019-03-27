@@ -22,6 +22,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const styles = theme => ({
   card: {
@@ -58,7 +59,12 @@ class GameItem extends React.Component {
   state = { 
     expanded: false,
     open: false,
+    checked: false,
   };
+
+  componentDidMount() {
+    this.handleChange();
+  }
 
   lobbyURL = () => {
     this.props.history.push('/lobby/' + this.props.game.id)
@@ -102,18 +108,22 @@ class GameItem extends React.Component {
     this.handleClose();
   }
 
+  handleChange = () => {
+    this.setState(state => ({ checked: !state.checked }));
+  };
+
   render() {
     const { classes } = this.props;
+    const { checked } = this.state;
     
     return (
       <>
+      {/* <Switch checked={checked} onChange={this.handleChange} aria-label="Collapse" /> */}
+        <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
+      <>
         {this.props.game.count < (this.props.game.max_players + 1) || this.props.mygames ||this.props.created ? 
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={this.props.key}>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={this.props.key}>
       <Card className={classes.card}>
-        
-
-
-
 
       {this.props.game.creator_id === this.props.user ? 
       
@@ -276,6 +286,8 @@ class GameItem extends React.Component {
 
       </Grid> 
        : '' }
+       </>
+        </Slide>
       </>
     );
   }
