@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import GameItem from '../GameItem/GameItem';
@@ -71,6 +69,12 @@ const styles = theme => ({
   resetContainer: {
     padding: theme.spacing.unit * 3,
   },
+  myButton: {
+    '&:hover': {
+      backgroundColor: 'blue',
+      opacity: .5,
+    }
+  }
 });
 
 class CreateGame extends Component {
@@ -91,10 +95,6 @@ class CreateGame extends Component {
   componentWillMount() {
     this.props.dispatch({ type: 'CREATED_GAME'})
   }
-
-  imageChoice = image => {
-
-  };
 
   handleChange = (property) => (event) => {
     event.preventDefault();
@@ -266,8 +266,6 @@ getStepContent = (step) =>  {
   }
 }
 
-
-
 deleteGame =(userId, gameId) => {
   this.props.dispatch({ type: 'DELETE_GAME', payload: {id: userId, game: gameId } })
 }
@@ -280,22 +278,20 @@ deleteGame =(userId, gameId) => {
   return (
     <div>
       <Grid container spacing={24}>
+      <Grid item xs={0} sm={0} lg={3} xl={4}>
+        </Grid>
+        <Grid item xs={12} sm={12} lg={6} xl={4}>
+          <Typography variant='h3' style={{color: 'white', textAlign: 'center'}}>Games You've Created</Typography>
+        </Grid>
+        <Grid item xs={0} sm={0} lg={3} xl={4}>
+        </Grid>
+
         <Grid item xs={5}>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>
-            <Button onClick={this.handleOpen}>Create a Game</Button>
-          </Paper>
+            <Button className={classes.myButton} onClick={this.handleOpen} style={{border: 'solid white 3px', color: 'white'}}>Create a Game</Button>
         </Grid>
         <Grid item xs={5}>
-        </Grid>
-
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper style={{padding: '0px'}} className={classes.paper}><h2>Games you've created</h2></Paper>
-        </Grid>
-        <Grid item xs={4}>
         </Grid>
 
         <Modal

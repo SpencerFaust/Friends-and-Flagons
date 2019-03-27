@@ -1,5 +1,3 @@
-
-
 html { 
   background: url(https://steamuserimages-a.akamaihd.net/ugc/521625973730267924/34F2CB597DDEFCA1A8CB2540697B96350900F7B2/) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -7,40 +5,3 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
-
- /* body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0px;  
-    background-image: "https://steamuserimages-a.akamaihd.net/ugc/521625973730267924/34F2CB597DDEFCA1A8CB2540697B96350900F7B2/";
-  } */
-
-/*.alert {
-    background-color: #ff4545;
-    margin: 50px;
-}
-
-.log-in, .log-out, .register {
-  background-color: #00acb0;
-  border-radius: 4px;
-  color: #f8f8f8;
-  min-height: 50px;
-  min-width: 100px;
-  outline:0;
-  cursor: pointer;
-}
-
-.log-in:hover, .log-out:hover, .register:hover {
-  background-color: #008183;
-} */
-
-/* This line makes the "Register" and "Login" buttons look like links */
-/* .link-button {
-    background:none;
-    color:inherit;
-    border:none;
-    padding:0;
-    font: inherit;
-    outline:0;
-    border-bottom:1px solid #444; 
-    cursor: pointer;
-} */
