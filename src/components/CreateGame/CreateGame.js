@@ -88,7 +88,7 @@ class CreateGame extends Component {
       open: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch({ type: 'CREATED_GAME'})
   }
 

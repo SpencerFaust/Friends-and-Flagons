@@ -15,8 +15,7 @@ class Games extends Component {
     };
   };
 
-  componentDidMount() {
-    console.log('Count:', Number(this.props.game.count))
+  componentWillMount() {
     this.props.dispatch({ type: 'FETCH_GAME', payload: this.props.user.id})
   }
 

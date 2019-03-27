@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 // and then instead of `props.user.username` you could use `user.username`
 class MyGames extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch({ type: 'FETCH_MY_GAME'})
   }
 
