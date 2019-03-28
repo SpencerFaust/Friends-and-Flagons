@@ -38,6 +38,7 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
+    height: '80%',
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -70,11 +71,13 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
   },
   myButton: {
+    border: 'solid white 3px',
+    color: 'white',
     '&:hover': {
       backgroundColor: 'blue',
       opacity: .5,
     }
-  }
+  },
 });
 
 class CreateGame extends Component {
@@ -116,10 +119,10 @@ class CreateGame extends Component {
 };
 
 handleNext = () => {
-  console.log(this.state)
   this.setState(state => ({
     activeStep: state.activeStep + 1,
   }));
+  console.log(this.state)
 };
 
 handleBack = () => {
@@ -248,8 +251,8 @@ getStepContent = (step) =>  {
               style = {{width: "80%"}}
               helperText="Make sure the link doesn't expire!"
             />;
-            case 6:
-              return <RadioGroup
+    case 6:
+      return <RadioGroup
               aria-label="Game Image"
               name="Dungeon"
               className={this.props.classes.group}
@@ -278,18 +281,18 @@ deleteGame =(userId, gameId) => {
   return (
     <div>
       <Grid container spacing={24}>
-      <Grid item xs={0} sm={0} lg={3} xl={4}>
+      <Grid item xs={'auto'} sm={'auto'} lg={3} xl={4}>
         </Grid>
         <Grid item xs={12} sm={12} lg={6} xl={4}>
           <Typography variant='h3' style={{color: 'white', textAlign: 'center'}}>Games You've Created</Typography>
         </Grid>
-        <Grid item xs={0} sm={0} lg={3} xl={4}>
+        <Grid item xs={'auto'} sm={'auto'} lg={3} xl={4}>
         </Grid>
 
         <Grid item xs={5}>
         </Grid>
         <Grid item xs={2}>
-            <Button className={classes.myButton} onClick={this.handleOpen} style={{border: 'solid white 3px', color: 'white'}}>Create a Game</Button>
+            <Button className={classes.myButton} onClick={this.handleOpen}>Create a Game</Button>
         </Grid>
         <Grid item xs={5}>
         </Grid>
@@ -299,14 +302,14 @@ deleteGame =(userId, gameId) => {
           aria-describedby="simple-modal-description"
           open={this.state.open}
           onClose={this.handleClose}
-          backgroundColor="grey"
         >
-          <div className={classes.modalPaper}>
+          <div >
             <Typography variant="h6" id="modal-title" style={{textAlign: 'center'}}>
               Enter your Game information!
             </Typography>
-            <div className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical" style={{overflowY: 'scroll'}}>
+            <div className={classes.modalPaper}>
+        <Stepper activeStep={activeStep} orientation="vertical" style={{overflowY: 'scroll'}}
+          className={classes.modalPaper} >
           {steps.map((label, index) => (
             <Step key={label} change={this.handleChange}  >
               <StepLabel>{label}</StepLabel>
@@ -336,7 +339,7 @@ deleteGame =(userId, gameId) => {
           ))}
         </Stepper>
         {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
+          <Paper square elevation={0} className={classes.modalPaper}>
             <Typography>Finalize your game creation!</Typography>
             <Button 
               variant="contained"

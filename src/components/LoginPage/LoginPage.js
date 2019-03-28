@@ -30,6 +30,7 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
+    height: '80%',
   },
   container: {
     display: 'flex',
@@ -46,6 +47,18 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
+  myButton: {
+    color: 'black',
+    margin: 'auto',
+    width: '100%',
+    height: '100%',
+    opacity: .9,
+    backgroundColor: 'grey',
+    '&:hover': {
+      backgroundColor: 'white',
+      opacity: .5,
+    }
+  },
 });
 
 class LoginPage extends Component {
@@ -56,10 +69,14 @@ class LoginPage extends Component {
     open: false,
   };
 
+  componentWillMount() {
+    this.props.dispatch({type: 'SET_TO_LOGIN_MODE'});
+  };
+
   loginRoute = (event) => {
     event.preventDefault();
     this.login(event);
-    this.props.history.push('/games');
+    this.props.history.push('/about');
   }
 
   login = (event) => {
@@ -96,14 +113,16 @@ class LoginPage extends Component {
   };
 
   handleClose = () => {
-    this.props.dispatch({type: 'SET_TO_LOGIN_MODE'});
-    this.setState({ open: false });
+    // if (this.props.loginMode === 'register') {
+      this.props.dispatch({type: 'SET_TO_LOGIN_MODE'});
+      this.setState({ open: false });
+    // } else {
+    //   return false;
+    // };
   };
   
   render() {
   const { classes } = this.props;
-
-
 
     return (
       <div className={classes.root}>
@@ -118,7 +137,7 @@ class LoginPage extends Component {
         <Grid container spacing={24}>
         
           <Grid item xs={12}>
-            <Paper className={classes.paper}><h1>FRIENDS AND FLAGONS</h1></Paper>
+            <Typography variant='h2' style={{color: 'white', textAlign: 'center', padding: 30}}>FRIENDS AND FLAGONS</Typography>
           </Grid>
          
         </Grid>
@@ -128,7 +147,7 @@ class LoginPage extends Component {
           </Grid>
           
             <Grid item xs={12} sm={4}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} style={{opacity: .9}}>
               <TextField
                   // id="filled-name"
                   label="User Name"
@@ -159,22 +178,19 @@ class LoginPage extends Component {
           <Grid item xs={4}>
           </Grid>
             <Grid item xs={6} sm={2}>
-              <Paper className={classes.paper}>
               <Button
-              className="log-in"
+              className={classes.myButton}
               type="submit"
               name="submit"
               value="Log In"
               onClick={this.loginRoute}
             >Login</Button>
-            </Paper>
           </Grid>
 
           <Grid item xs={6} sm={2}>
-            <Paper className={classes.paper}>
             <Button
              type="button"
-             className="link-button"
+             className={classes.myButton}
              onClick={this.openRegister}
            >
              Register
@@ -185,16 +201,15 @@ class LoginPage extends Component {
           aria-describedby="simple-modal-description"
           open={this.state.open}
           onClose={this.handleClose}
+          className={classes.modalPaper}
         >
-          <div className={classes.modalPaper}>
+          <div >
             <Typography variant="h6" id="modal-title" style={{textAlign: 'center'}}>
               Thank you for registering!
             </Typography>
             <RegisterPage />
           </div>
         </Modal>
-
-            </Paper>
           </Grid>
      </Grid>
   </div>

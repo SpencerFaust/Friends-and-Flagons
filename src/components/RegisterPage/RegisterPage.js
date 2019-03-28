@@ -14,7 +14,19 @@ import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '70%',
+  },
+  modalPaper: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: theme.spacing.unit * 50,
+    backgroundColor: 'grey',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none',
+    height: '80%',
   },
   button: {
     marginTop: theme.spacing.unit,
@@ -73,6 +85,7 @@ class RegisterPage extends Component {
     this.setState({ 
       ...this.state,
       open: false });
+      this.props.history.push('/')
   };
 
   loginReroute = () => {
@@ -171,17 +184,16 @@ class RegisterPage extends Component {
     const steps = this.getSteps();
     const { activeStep } = this.state;
 
-
-
-
     return (
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical">
+      <div >
+      <div className={classes.modalPaper}>
+      <Button onClick={this.handleClose} style={{color: 'white'}}>X</Button>
+        <Stepper activeStep={activeStep} orientation="vertical" className={classes.modalPaper}>
           {steps.map((label, index) => (
-            <Step key={label} change={this.handleChange}  >
+            <Step key={label} change={this.handleChange}>
               <StepLabel>{label}</StepLabel>
               <StepContent>
-                <Typography>{this.getStepContent(index, this.handleChange)}</Typography>
+                  <Typography>{this.getStepContent(index, this.handleChange)}</Typography>
                 <div className={classes.actionsContainer}>
                   <div>
                     <Button
@@ -206,7 +218,7 @@ class RegisterPage extends Component {
           ))}
         </Stepper>
         {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
+          <Paper square elevation={0} className={classes.modalPaper}>
             <Typography>All you need to do now is finalize registration!</Typography>
             <Button 
               variant="contained"
@@ -217,6 +229,7 @@ class RegisterPage extends Component {
             </Button>
           </Paper>
         )}
+      </div>
       </div>
     );
   }
