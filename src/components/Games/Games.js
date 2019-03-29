@@ -5,12 +5,6 @@ import Grid from '@material-ui/core/Grid';
 
 class Games extends Component {
 
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     title: navigation.getParam('Browse Games'),
-  //   };
-  // };
-
   componentWillMount() {
     this.props.dispatch({ type: 'FETCH_GAME', payload: this.props.user.id})
   }
