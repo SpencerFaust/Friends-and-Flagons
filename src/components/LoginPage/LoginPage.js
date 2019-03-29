@@ -149,24 +149,26 @@ class LoginPage extends Component {
             <Grid item xs={12} sm={4}>
             <Paper className={classes.paper} style={{opacity: .9}}>
               <TextField
-                  // id="filled-name"
+                  id="filled-name"
                   label="User Name"
                   className={classes.textField}
                   value={this.state.username}
                   onChange={this.handleInputChangeFor('username')}
-                  // margin="normal"
-                  variant="filled"
+                  margin="normal"
+                  variant="outlined"
+                  color="white"
                   helperText="What is your username?"
                 />
               <TextField
-                  // id="filled-password"
+                  id="filled-password"
                   type="password"
                   label="Password"
                   className={classes.textField}
                   value={this.state.password}
                   onChange={this.handleInputChangeFor('password')}
-                  // margin="normal"
-                  variant="filled"
+                  margin="normal"
+                  variant="outlined"
+                  style={{border: 'white', color: 'white'}}
                   helperText="What is your password?"
                 />
               
