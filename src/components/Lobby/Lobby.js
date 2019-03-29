@@ -18,6 +18,7 @@ const styles = theme => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: 'grey',
+      // opacity: .5,
     },
   });
 
@@ -119,14 +120,14 @@ class Lobby extends Component {
             <div className={classes.root}>
         <Grid container spacing={24}>
            <Grid item xs={12} sm={12}>
-            <Paper className={classes.paper}><Typography variant='h3'>{this.props.game[0] && this.props.game[0].game_name}</Typography></Paper>
+            <Typography variant='h3' style={{color: 'white', textAlign: 'center'}}>{this.props.game[0] && this.props.game[0].game_name}</Typography>
           </Grid>
           
           <Grid item xs={12} sm={4} lg={3} xl={2}>
             <Paper className={classes.paper} style={{height: '32vw'}}>
               <Typography variant='h5'>Roll Dice</Typography> <br />
               <Button onClick={this.rollDie('D4')}>    
-                <img src="https://openclipart.org/image/2400px/svg_to_png/277761/1492037363.png" style={{maxHeight: 55, padding: 10}} />
+                <img src="https://openclipart.org/image/2400px/svg_to_png/277761/1492037363.png" style={{maxHeight: 55, padding: 10, opacity: 1}} />
               </Button> 
               <Button onClick={this.rollDie('D6')}>    
                 <img src="https://openclipart.org/image/2400px/svg_to_png/94489/six-sided-dice.png" style={{maxHeight: 55, padding: 10}} /> <br />
@@ -152,15 +153,13 @@ class Lobby extends Component {
             <Paper className={classes.paper} style={{height: '32vw', position: 'relative'}}>
             <div>
               <div id="messages" style={{overflowWrap: 'break-word', overflow: 'scroll', position: 'absolute', bottom: 5, width: '100%', textAlign: 'left',  color: 'black'}} >
-                <div id="msgWindow" style={{positon: 'absolute', maxHeight: 320, overflow: 'auto'}}>
+                <div id="msgWindow" style={{positon: 'absolute', maxHeight: 320, overflow: 'auto', opacity: 1, color: 'black' }}>
                   {this.state.chatMessages.map(message => <p key={message}>{message}</p>)}
                   <div style={{ float:"left", clear: "both" }}
                     ref={(el) => { this.messagesEnd = el; }}>
                   </div>
                 </div>
                 
-              {/* </div>
-              <div  style={{position: 'absolute', bottom: 20, width: '100%'}}> */}
               <TextField
                 id="filled-multiline-flexible"
                 label="Group Chat"
