@@ -166,7 +166,7 @@ handleChange = propertyName => (event) => {
 }
 
 getSteps() {
-  return ['Your Games Name', 'How many players do you need?', 'Provide ptential players with a description of your game.', 'What date will you be playing?', 'What time will you be starting?', 'Provide a link to your Discord server.', 'Select the intended setting for your game.'];
+  return ['Your Games Name', 'How many players do you need?', 'Provide potential players with a description of your game.', 'What date will you be playing?', 'What time will you be starting?', 'Provide a link to your Discord server.', 'Select the intended setting for your game.'];
 }
 
 getStepContent = (step) =>  {

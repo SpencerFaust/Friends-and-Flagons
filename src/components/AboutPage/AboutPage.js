@@ -37,7 +37,7 @@ function AboutPage(props) {
               Hello and welcome to Friends & Flagons, the newest online community for table top roleplayers!
             </Typogaphy>
             <Typogaphy variant='h6' className={classes.typog}>
-              Friends & Flagons' mission statement is to provide a space where table top roleplayers are able to find games to play or even create their own!
+              Friends & Flagon's mission statement is to provide a space where table top roleplayers are able to find games to play or even create their own!
               Using the navigation at the top of the page you are able to view and sign up to participate in games, see more information about all the games you've signed up for or created, 
               create a new game and even access a game lobby when it's time to play! The in game lobby provides a chat feature as well as a die rolling method so everyone can see what a hot streak you're
               on! 
