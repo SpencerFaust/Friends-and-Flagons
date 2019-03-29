@@ -18,7 +18,7 @@ const styles = theme => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: 'grey',
-      // opacity: .5,
+      opacity: .95,
     },
   });
 
@@ -159,7 +159,7 @@ class Lobby extends Component {
                     ref={(el) => { this.messagesEnd = el; }}>
                   </div>
                 </div>
-                
+
               <TextField
                 id="filled-multiline-flexible"
                 label="Group Chat"
