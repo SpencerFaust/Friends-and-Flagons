@@ -185,12 +185,12 @@ class RegisterPage extends Component {
     const { activeStep } = this.state;
 
     return (
-      <div >
+      <div>
       <div className={classes.modalPaper}>
       <Button onClick={this.handleClose} style={{color: 'white'}}>X</Button>
-        <Stepper activeStep={activeStep} orientation="vertical" className={classes.modalPaper}>
+        <Stepper activeStep={activeStep} orientation="vertical" className={classes.modalPaper} >
           {steps.map((label, index) => (
-            <Step key={label} change={this.handleChange}>
+            <Step key={label} change={this.handleChange} >
               <StepLabel>{label}</StepLabel>
               <StepContent>
                   <Typography>{this.getStepContent(index, this.handleChange)}</Typography>
