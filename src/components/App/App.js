@@ -20,6 +20,7 @@ import CreateGame from '../CreateGame/CreateGame';
 import LoginPage from '../LoginPage/LoginPage';
 import Lobby from '../Lobby/Lobby';
 import './App.css';
+import fireside from '../Images/Fireside.gif';
 
 class App extends Component {
   componentWillMount () {
@@ -28,8 +29,8 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
+      <Router >
+        <div >
         <Route 
               path={/^(?!.*login).*$/}
               component={Nav}
