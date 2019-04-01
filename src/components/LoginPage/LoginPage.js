@@ -156,7 +156,6 @@ class LoginPage extends Component {
                   onChange={this.handleInputChangeFor('username')}
                   margin="normal"
                   variant="outlined"
-                  color="white"
                   helperText="What is your username?"
                 />
               <TextField
@@ -168,7 +167,6 @@ class LoginPage extends Component {
                   onChange={this.handleInputChangeFor('password')}
                   margin="normal"
                   variant="outlined"
-                  style={{border: 'white', color: 'white'}}
                   helperText="What is your password?"
                 />
               
