@@ -27,10 +27,6 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* Routes */
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
 app.use('/api/user', userRouter);
 app.use('/api/game', gameRouter);
 

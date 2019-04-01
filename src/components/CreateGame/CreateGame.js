@@ -273,20 +273,20 @@ deleteGame =(userId, gameId) => {
   this.props.dispatch({ type: 'DELETE_GAME', payload: {id: userId, game: gameId } })
 }
 
-// handleKeyPress = (event) => {
-//   if (event.key === 'l') {
-//     this.setState({
-//       gameName: 'Leviathon Lounge',
-//       maxPlayers: '4',
-//       gameDescription: 'A mysterious, giant creature has been seen swimming in the lake. Enough people have seen it now to warrant further investigation and adventurers are needed to go down into the black...',
-//       date: '04-12-2019',
-//       time: '5:00pm',
-//       gameImage: 'http://dndspeak.com/wp-content/uploads/2018/03/cave_by_nele_diel-d655qw5.jpg',
-//       discord: 'www.discord.gg/PrsNTTn',
-//       creator: this.props.user.id,
-//     })
-//   }
-// }
+handleKeyPress = (event) => {
+  if (event.key === 'l') {
+    this.setState({
+      gameName: 'Leviathon Lounge',
+      maxPlayers: '4',
+      gameDescription: 'A mysterious, giant creature has been seen swimming in the lake. Enough people have seen it now to warrant further investigation and adventurers are needed to go down into the black...',
+      date: '04-12-2019',
+      time: '5:00pm',
+      gameImage: 'http://dndspeak.com/wp-content/uploads/2018/03/cave_by_nele_diel-d655qw5.jpg',
+      discord: 'www.discord.gg/PrsNTTn',
+      creator: this.props.user.id,
+    })
+  }
+}
 
   render() {
   const { classes } = this.props;
