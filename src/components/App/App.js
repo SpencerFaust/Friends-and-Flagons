@@ -20,7 +20,6 @@ import CreateGame from '../CreateGame/CreateGame';
 import LoginPage from '../LoginPage/LoginPage';
 import Lobby from '../Lobby/Lobby';
 import './App.css';
-import fireside from '../Images/Fireside.gif';
 
 class App extends Component {
   componentWillMount () {
