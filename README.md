@@ -68,4 +68,4 @@ License
 This project is licensed under the MIT License
 
 Acknowledgments 
-A special thanks to Prime Digital Academy and my instructor Luke.
+A special thanks to Prime Digital Academy and my instructor Luke S.
