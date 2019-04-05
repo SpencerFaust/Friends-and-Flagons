@@ -1,4 +1,4 @@
-Server Side Calculator 
+Friends & Flagons
 This app is a full stack app which allows users to register, login and then create, join, leave, delete and play table top roleplaying games.
 
 Getting Started Visit 
